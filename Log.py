@@ -4,7 +4,6 @@ import time
 
 LOG_PATH = ".\\Log\\log.txt"
 
-
 def InitLog():
     """
     初始化日志文件
