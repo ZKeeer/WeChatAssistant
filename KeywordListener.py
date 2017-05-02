@@ -6,7 +6,6 @@ import itchat
 
 import Config
 
-
 def GetMsgFrom(msg):
     """
     提取消息中的联系人和群组名
