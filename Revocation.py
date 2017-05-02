@@ -5,20 +5,20 @@ import shutil
 import time
 
 import itchat
-from itchat.content import *
 
-import Execution
-
-# {msg_id:(msg_from,msg_to,msg_time,msg_time_touser,msg_type,msg_content,msg_url)}
 msg_store = {}
 
 
 # ClearTimeOutMsg用于清理消息字典，把超时消息清理掉
 # 为减少资源占用，此函数只在有新消息动态时调用
 def ClearTimeOutMsg():
+    """
+    清理msg_store中超时的消息
+    :return: 无
+    """
     if msg_store.__len__() > 0:
         for msgid in list(msg_store):  # 由于字典在遍历过程中不能删除元素，故使用此方法
-            if time.time() - msg_store.get(msgid, None)["msg_time"] > 140.0:  # 超时两分钟
+            if time.time() - msg_store.get(msgid, None)["msg_time"] > 300.0:  # 超时两分钟
                 item = msg_store.pop(msgid)
 
                 # 可下载类消息，并删除相关文件
@@ -26,7 +26,30 @@ def ClearTimeOutMsg():
                     os.remove(".\\Cache\\" + item['msg_content'])
 
 
+def GetOldMsg(msg):
+    """
+    从存储的消息中查找撤回到消息
+    :param msg: 微信消息
+    :return: 无
+    """
+    old_msg_id = ""
+    old_msg = {}
+    itchat.search_chatrooms()
+    if re.search(r"\!\[CDATA\[.*撤回了一条消息\]\]", msg['Content']):
+        if re.search("\<msgid\>(.*?)\<\/msgid\>", msg['Content']):
+            old_msg_id = re.search("\<msgid\>(.*?)\<\/msgid\>", msg['Content']).group(1)
+        elif re.search("\;msgid\&gt\;(.*?)\&lt", msg['Content']):
+            old_msg_id = re.search("\;msgid\&gt\;(.*?)\&lt", msg['Content']).group(1)
+        old_msg = msg_store.get(old_msg_id, {})
+    return old_msg_id, old_msg
+
+
 def GetMsgFrom(msg):
+    """
+    获取消息来源：联系人和群名
+    :param msg: 微信消息
+    :return: 无
+    """
     msg_group = r""
     if itchat.search_friends(userName=msg['FromUserName']):
         if itchat.search_friends(userName=msg['FromUserName'])['RemarkName']:
@@ -34,28 +57,25 @@ def GetMsgFrom(msg):
         elif itchat.search_friends(userName=msg['FromUserName'])['NickName']:  # 消息发送人昵称
             msg_from = itchat.search_friends(userName=msg['FromUserName'])['NickName']  # 消息发送人昵称
         else:
-            msg_from = r"读取发送消息好友失败"
+            msg_from = r"读取好友失败"
     else:
-        msg_from = msg['ActualNickName']
-        if msg['ActualUserName'] == itchat.get_friends()[0]['UserName']:
-            return
-        if itchat.search_chatrooms(userName=msg['FromUserName']):
-            msg_group += r'[ '
-            msg_group += itchat.search_chatrooms(userName=msg['FromUserName'])['NickName']
-            msg_group += r' ]中, '
+        msg_from = msg.get('ActualNickName', "")
+        if not msg_from:
+            msg_from = itchat.search_friends(userName=msg['FromUserName'])
+
+    if itchat.search_chatrooms(userName=msg['FromUserName']):
+        msg_group += r'[ '
+        msg_group += itchat.search_chatrooms(userName=msg['FromUserName'])['NickName']
+        msg_group += r' ]'
     return msg_from, msg_group
 
 
-# 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
-# 没有注册note（通知类）消息，通知类消息一般为：红包 转账 消息撤回提醒等，不具有撤回功能
-@itchat.msg_register([TEXT, PICTURE, MAP, CARD, SHARING, RECORDING, ATTACHMENT, VIDEO, FRIENDS], isFriendChat=True,
-                     isGroupChat=True)
-def Revocation(msg):
-    # 处理指令
-    itchat.get_friends(update=True)
-    if msg['ToUserName'] == "filehelper" and msg['Type'] == "Text":
-        Execution.Execution(msg)
-
+def SaveMsg(msg):
+    """
+    储存所有接收到的消息，以便撤回时查找
+    :param msg: 微信消息
+    :return: 无
+    """
     msg_id = msg['MsgId']  # 消息ID
     msg_time = msg['CreateTime']  # 消息时间
     msg_from, msg_group = GetMsgFrom(msg)  # 消息来源
@@ -72,9 +92,9 @@ def Revocation(msg):
     elif msg['Type'] == 'Card':
         msg_content = msg['RecommendInfo']['NickName'] + r" 的名片"
     elif msg['Type'] == 'Map':
-        x, y, location = re.search("<location x=\"(.*?)\" y=\"(.*?)\".*label=\"(.*?)\".*", msg['OriContent']).group(1,
-                                                                                                                    2,
-                                                                                                                    3)
+        x, y, location = \
+            re.search("<location x=\"(.*?)\" y=\"(.*?)\".*label=\"(.*?)\".*",
+                      msg['OriContent']).group(1, 2, 3)
         if location is None:
             msg_content = r"纬度->" + x.__str__() + " 经度->" + y.__str__()
         else:
@@ -100,42 +120,35 @@ def Revocation(msg):
     msg_store.update(
         {msg_id: {"msg_from": msg_from, "msg_time": msg_time, "msg_type": msg_type,
                   "msg_content": msg_content, "msg_url": msg_url, "msg_group": msg_group}})
-    # 清理字典
-    ClearTimeOutMsg()
 
 
-def GetSendMsg(old_msg, msg_time_to_user):
-    msg_send = old_msg['msg_group']
+def GetMsgToSend(old_msg, msg_time_to_user):
+    msg_send = "%s%s%s%s" % ("=" * 4, "Revocatin Message", "=" * 4, "\n\n")
 
-    msg_send += r"您的好友：%s %s在[ %s ]%s撤回了一条[ %s ]消息%s内容如下:%s" % (
-        old_msg.get('msg_from', None), "\n", msg_time_to_user, "\n", old_msg.get('msg_type', None), "\n",
-        old_msg.get('msg_content', None))
+    msg_send += "Time: %s%sWho: %s%s" % (msg_time_to_user, "\n\n", old_msg.get('msg_from', None), "\n\n")
 
-    if old_msg['msg_type'].__eq__("Sharing"):
-        msg_send += r"%s链接:%s" % ("\n", old_msg.get('msg_url', None))
+    if old_msg.get('msg_group', None):
+        msg_send += "Group: %s%s" % (old_msg['msg_group'], "\n\n")
+
+    msg_send += "Type: %s%sContent: %s%s" % (
+        old_msg.get('msg_type', None), "\n\n", old_msg.get('msg_content', None), "\n\n")
+
+    if old_msg['msg_type'] == "Sharing":
+        msg_send += r"Url: %s%s" % (old_msg.get('msg_url', None), "\n\n")
 
     elif old_msg['msg_type'] in ['Picture', 'Recording', 'Video', 'Attachment']:
-        msg_send += r"%s存储在当前目录下Revocation文件夹中%s可以通过命令=>查看文件[%s]<=查看" % (
-            "\n", "\n", old_msg.get('msg_content', None))
+        msg_send += r"Store: Revocation文件夹中%sCommmand: 查看文件[%s]" % (
+            "\n\n", old_msg.get('msg_content', None))
         shutil.move(r".\\Cache\\" + old_msg['msg_content'], r".\\Revocation\\")
     return msg_send
 
 
-def GetOldMsg(msg):
-    old_msg_id = ""
-    old_msg = {}
-    itchat.search_chatrooms()
-    if re.search(r"\!\[CDATA\[.*撤回了一条消息\]\]", msg['Content']):
-        if re.search("\<msgid\>(.*?)\<\/msgid\>", msg['Content']):
-            old_msg_id = re.search("\<msgid\>(.*?)\<\/msgid\>", msg['Content']).group(1)
-        elif re.search("\;msgid\&gt\;(.*?)\&lt", msg['Content']):
-            old_msg_id = re.search("\;msgid\&gt\;(.*?)\&lt", msg['Content']).group(1)
-        old_msg = msg_store.get(old_msg_id, {})
-    return old_msg_id, old_msg
-
-
-@itchat.msg_register([NOTE], isFriendChat=True, isGroupChat=True)
-def SaveMsg(msg):
+def Revocation(msg):
+    """
+    监听撤回消息通知
+    :param msg: 微信消息
+    :return: 无
+    """
     mytime = time.localtime()
     msg_time_touser = "%s/%s/%s %s:%s:%s" % (
         mytime.tm_year.__str__(), mytime.tm_mon.__str__(), mytime.tm_mday.__str__(), mytime.tm_hour.__str__(),
@@ -147,15 +160,6 @@ def SaveMsg(msg):
 
     msg_id, old_msg = GetOldMsg(msg)
     if old_msg:
-        msg_send = GetSendMsg(old_msg, msg_time_touser)
+        msg_send = GetMsgToSend(old_msg, msg_time_touser)
         itchat.send(msg_send, toUserName='filehelper')  # 将撤回消息的通知以及细节发送到文件助手
         msg_store.pop(msg_id)
-        print(msg_send, end="\n")
-
-
-if __name__ == '__main__':
-    ClearTimeOutMsg()
-    if not os.path.exists(".\\Cache\\"):
-        os.mkdir(".\\Cache\\")
-    itchat.auto_login(hotReload=True)
-    itchat.run()
