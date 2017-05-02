@@ -1,8 +1,6 @@
 import os
 import re
-
 import itchat
-
 import Config
 
 
