@@ -2,7 +2,6 @@
 
 import itchat
 from itchat.content import *
-
 from config import Config
 from execution import Execution
 from keywordlistener import KeywordListener
