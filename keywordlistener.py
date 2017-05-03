@@ -1,9 +1,7 @@
 # -*-encoding:utf-8-*-
 import re
 import time
-
 import itchat
-
 from config import Config
 
 
