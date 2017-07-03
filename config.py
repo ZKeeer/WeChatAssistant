@@ -1,7 +1,7 @@
 # -*-encoding:utf-8-*-
 import os
 
-CONFIG_PATH = ".\\config.txt"
+CONFIG_PATH = "./config.txt"
 
 
 class Config:

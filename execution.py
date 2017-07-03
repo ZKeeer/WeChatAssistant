@@ -5,7 +5,7 @@ from config import Config
 
 
 class Execution:
-    REVOCATIONPATH = ".\\Revocation\\"
+    REVOCATIONPATH = "./Revocation/"
 
     def __init__(self):
         pass
@@ -81,13 +81,13 @@ class Execution:
             else:
                 msg_type = "fil"
 
-            itchat.send("@%s@%s" % (msg_type, r".\\Revocation\\" + filename),
+            itchat.send("@%s@%s" % (msg_type, r"./Revocation/" + filename),
                         toUserName="filehelper")
 
         elif action == r"删除":
             try:
-                if os.path.exists(r".\\Revocation\\" + filename):
-                    os.remove(r".\\Revocation\\" + filename)
+                if os.path.exists(r"./Revocation/" + filename):
+                    os.remove(r"./Revocation/" + filename)
                     itchat.send("%s%s%s%s撤回助手：删除附件成功" % ("=" * 4, "Command Message", "=" * 4, "\n\n"), toUserName='filehelper')
                 return
             except:

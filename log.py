@@ -4,11 +4,11 @@ import time
 
 
 class Log:
-    LOG_PATH = ".\\Log\\log.txt"
+    LOG_PATH = "./Log/log.txt"
 
     def __init__(self):
-        if not os.path.exists(".\\Log\\"):
-            os.mkdir(".\\Log\\")
+        if not os.path.exists("./Log/"):
+            os.mkdir("./Log/")
 
         if not os.path.exists(self.LOG_PATH):
             with open(self.LOG_PATH, "w") as fw:
