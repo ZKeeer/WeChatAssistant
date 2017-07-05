@@ -3,7 +3,9 @@ import os
 import re
 import shutil
 import time
+
 import itchat
+
 
 class Revocation:
     msg_store = {}
@@ -91,7 +93,9 @@ class Revocation:
             msg_content = msg['FileName']
             msg['Text'](msg['FileName'])
             if os.path.exists("./Cache/{}".format(msg_content)):
-                msg_content = msg_content.replace('.', '-1.')
+                msg_content_modify = msg_content.replace('.', '-1.')
+                os.rename(msg_content, msg_content_modify)
+                msg_content = msg_content_modify
             shutil.move(msg_content, r"./Cache/")
 
         elif msg['Type'] == 'Card':
