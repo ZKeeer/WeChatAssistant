@@ -67,7 +67,7 @@ class Execution:
             msg_send += "添加签到口令【{}:{}】成功".format(mps, cmd)
             itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^删除签到口令#.*#$", command):
-            mps = re.search("^删除签到口令#(.*?)#$", command)
+            mps = re.search("^删除签到口令#(.*?)#$", command).group(1)
             if self.snin.DeleteComd(mps):
                 msg_send += "口令【{}】删除成功".format(mps)
             else:

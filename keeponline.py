@@ -4,8 +4,6 @@ import itchat
 
 
 class KeepOnline:
-    curr_hour = 0
-
     def __init__(self):
         self.curr_hour = time.localtime().tm_hour
 
@@ -13,6 +11,7 @@ class KeepOnline:
         if self.curr_hour == time.localtime().tm_hour:
             return True
         else:
+            self.curr_hour = time.localtime().tm_hour
             return False
 
     def ActiveWX(self):

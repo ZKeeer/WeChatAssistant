@@ -90,7 +90,10 @@ class Revocation:
         elif msg['Type'] == 'Picture':
             msg_content = msg['FileName']
             msg['Text'](msg['FileName'])
+            if os.path.exists("./Cache/{}".format(msg_content)):
+                msg_content = msg_content.replace('.', '-1.')
             shutil.move(msg_content, r"./Cache/")
+
         elif msg['Type'] == 'Card':
             msg_content = msg['RecommendInfo']['NickName'] + r" 的名片"
         elif msg['Type'] == 'Map':

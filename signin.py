@@ -63,7 +63,7 @@ class SignInMPS:
         对需要签到的公众号进行签到。
         :return: 无
         """
-        print("issigned:", self.IsSigned())
+
         if self.IsSigned():
             pass
         else:
@@ -101,7 +101,8 @@ class SignInMPS:
         with open(self.Command_Path, 'r') as fr:
             file_content = fr.read()
         if re.findall(mps, file_content):
-            re.sub("#^{}$:.*#".format(mps), file_content, '')
+            comd = re.search("#{}:(.*?)#".format(mps), file_content).group(1)
+            file_content = file_content.replace('#{}:{}#'.format(mps, comd), '')
             with open(self.Command_Path, 'w') as fw:
                 fw.write(file_content)
             return True
