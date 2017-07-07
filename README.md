@@ -14,4 +14,3 @@ PC端微信防撤回代码，多关键词监听<br><br>
 <img src="http://op6aicuc2.bkt.clouddn.com/%E6%8C%87%E4%BB%A4%E6%B6%88%E6%81%AF.jpg"><br>
 <br><br><br>
 微信公众号签到功能：添加/删除/查看/清空公众号签到口令<br>
-<img src="http://op6aicuc2.bkt.clouddn.com/%E5%85%AC%E4%BC%97%E5%8F%B7%E7%AD%BE%E5%88%B01.png">
