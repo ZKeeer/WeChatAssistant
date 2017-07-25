@@ -5,7 +5,7 @@ import itchat
 
 from config import Config
 from signin import SignInMPS
-
+import screenshoot
 
 class Execution:
     REVOCATIONPATH = "./Revocation/"
@@ -73,6 +73,8 @@ class Execution:
             else:
                 msg_send += "口令【{}】删除失败".format(mps)
             itchat.send(msg_send, toUserName='filehelper')
+        elif re.match("^截图$", command):
+            screenshoot.SC()
         else:
             itchat.send(r"暂时支持以下指令：{}"
                         r"查看/删除文件[文件名] e.g.查看[123345234.mp3]{}"
@@ -86,8 +88,9 @@ class Execution:
                         r"删除签到口令#公众号#  e.g.删除签到口令#招商银行信用卡#{}"
                         r"查看签到口令  查看已经存在的公众和和对应的签到口令{}"
                         r"清空签到口令  清空所有签到口令{}"
+                        r"截图 截取运行本程序的机器当前界面{}"
                         r"其他指令暂不支持，请期待最新版本。".format("\n\n", "\n\n", "\n\n", "\n\n", "\n\n", "\n\n", "\n\n", "\n\n",
-                                                    "\n\n", "\n\n", "\n\n", "\n\n"),
+                                                    "\n\n", "\n\n", "\n\n", "\n\n", "\n\n"),
                         toUserName="filehelper")
 
     def ViewDeleteFile(self, action, filename):

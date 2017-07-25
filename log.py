@@ -14,6 +14,8 @@ class Log:
             with open(self.LOG_PATH, "w") as fw:
                 pass
 
-    def WriteLog(self, msg):
+    def WriteLog(self, e):
         with open(self.LOG_PATH, "a") as fw:
-            fw.write(time.ctime() + "\n" + msg + "\n\n\n")
+            msg_error = "ERROR:%stime: %s%slineno: %s%serrorinfo: %s%s" % (
+                "\n", time.ctime(), "\n", e.__traceback__.tb_lineno, "\n", e.args[0], "\n\n\n")
+            fw.write(msg_error)
