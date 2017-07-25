@@ -2,12 +2,11 @@
 
 import itchat
 from itchat.content import *
-
+import traceback
 from config import Config
 from execution import Execution
 from keeponline import KeepOnline
 from keywordlistener import KeywordListener
-from log import Log
 from revocation import Revocation
 from signin import SignInMPS
 
@@ -35,7 +34,7 @@ def Main(msg):
         try:
             exec_command.Execution(msg)
         except BaseException as e:
-            mylog.WriteLog(e)
+            traceback.print_exc(file=open('log.txt', 'a'))
 
     # 三大功能之二：撤回消息部分
     try:
@@ -43,24 +42,25 @@ def Main(msg):
         rmsg.Revocation(msg)
         rmsg.ClearTimeOutMsg()
     except BaseException as e:
-        mylog.WriteLog(e)
+        traceback.print_exc(file=open('log.txt', 'a'))
 
     # 三大功能之三：关键词监听
     if msg['Type'] in ['Text', 'Sharing', 'Map', 'Card']:
         try:
             listener.Listener(msg)
         except BaseException as e:
-            mylog.WriteLog(e)
+            traceback.print_exc(file=open('log.txt', 'a'))
 
     # 功能：公众号签到
-    signfunc.SignIn()
-
+    try:
+        signfunc.SignIn()
+    except BaseException as e:
+        traceback.print_exc(file=open('log.txt', 'a'))
     # 功能：保持在线
     kol.ActiveWX()
 
 
 if __name__ == '__main__':
-    mylog = Log()
     config = Config()
     # 机器上有默认的图片打开程序，使用这个，直接弹出二维码扫码登陆
     itchat.auto_login(hotReload=True)
