@@ -7,7 +7,7 @@ PC端微信防撤回代码，多关键词监听<br>
 微信公众号签到功能：添加/删除/查看/清空公众号签到口令<br>
 2017-07-26 => 添加截图功能,仅针对有图形界面的机器,已在linux, windows测试<br>
 截图功能依赖: <br>
-     python: pyscreenshot(only linux), PIL<br>
+     python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）<br>
      linux: scrot<br>
 
 
