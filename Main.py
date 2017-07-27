@@ -67,8 +67,9 @@ if __name__ == '__main__':
     #itchat.auto_login(hotReload=True)
     # 使用命令行登录，选此条语句，参数选2或者1，根据不同机器的字符宽度决定，大家挨个尝试
     #itchat.auto_login(hotReload=True, enableCmdQR=2)
-    if sys.argv[1] == '-t':
-        itchat.auto_login(hotReload=True, enableCmdQR=2)
-    else:
-        itchat.auto_login(hotReload=True)
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '-t':
+            itchat.auto_login(hotReload=True, enableCmdQR=2)
+        else:
+            itchat.auto_login(hotReload=True)
     itchat.run()
