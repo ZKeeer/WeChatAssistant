@@ -1,5 +1,6 @@
 # -*-encoding:utf-8-*-
 
+import sys
 import itchat
 from itchat.content import *
 import traceback
@@ -63,7 +64,11 @@ def Main(msg):
 if __name__ == '__main__':
     config = Config()
     # 机器上有默认的图片打开程序，使用这个，直接弹出二维码扫码登陆
-    itchat.auto_login(hotReload=True)
+    #itchat.auto_login(hotReload=True)
     # 使用命令行登录，选此条语句，参数选2或者1，根据不同机器的字符宽度决定，大家挨个尝试
     #itchat.auto_login(hotReload=True, enableCmdQR=2)
+    if sys.argv[0] == '-t':
+        itchat.auto_login(hotReload=True, enableCmdQR=2)
+    else:
+        itchat.auto_login(hotReload=True)
     itchat.run()
