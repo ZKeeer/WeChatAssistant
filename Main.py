@@ -75,9 +75,9 @@ if __name__ == '__main__':
     else:
         if sys.platform == 'linux':
             if "XDG_CURRENT_DESKTOP" in os.environ:
-                itchat.auto_login(hotReload=True, enableCmdQR=2)
-            else:
                 itchat.auto_login(hotReload=True)
+            else:
+                itchat.auto_login(hotReload=True, enableCmdQR=2)
         else:
             itchat.auto_login(hotReload=True)
                 
