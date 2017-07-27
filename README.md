@@ -1,6 +1,6 @@
 # WeChatForRevocation<br><br>
 基于<a href="https://github.com/littlecodersh/ItChat.git">itchat</a><br><br>
-贡献者：<a href='https://github.com/XAS-712'>XAS-712</a> 
+贡献者：<a href='https://github.com/XAS-712'>XAS-712</a> <br><br>
 环境：windows10 64位；Python版本：python3.5<br>
 <strong>默认</strong>使用系统的图片查看程序打开，<h3>如果使用命令行扫码登录，请在Main.py中按照注释进行选择。</h3><br><br>
 PC端微信防撤回代码，多关键词监听<br>
