@@ -132,22 +132,22 @@ class Revocation:
                       "msg_content": msg_content, "msg_url": msg_url, "msg_group": msg_group}})
 
     def GetMsgToSend(self, old_msg, msg_time_to_user):
-        msg_send = "%s%s%s%s" % ("=" * 4, "Revocatin Message", "=" * 4, "\n\n")
+        msg_send = "%s%s%s%s" % ("=" * 4, "有人撤回了消息", "=" * 4, "\n")
 
-        msg_send += "Time: %s%sWho: %s%s" % (msg_time_to_user, "\n\n", old_msg.get('msg_from', None), "\n\n")
+        msg_send += "时间: %s%s谁: %s%s" % (msg_time_to_user, "\n", old_msg.get('msg_from', None), "\n")
 
         if old_msg.get('msg_group', None):
-            msg_send += "Group: %s%s" % (old_msg['msg_group'], "\n\n")
+            msg_send += "群组: %s%s" % (old_msg['msg_group'], "\n")
 
-        msg_send += "Type: %s%sContent: %s%s" % (
-            old_msg.get('msg_type', None), "\n\n", old_msg.get('msg_content', None), "\n\n")
+        msg_send += "类型: %s%s内容: %s%s" % (
+            old_msg.get('msg_type', None), "\n", old_msg.get('msg_content', None), "\n")
 
         if old_msg['msg_type'] == "Sharing":
-            msg_send += r"Url: %s%s" % (old_msg.get('msg_url', None), "\n\n")
+            msg_send += r"网址: %s%s" % (old_msg.get('msg_url', None), "\n")
 
         elif old_msg['msg_type'] in ['Picture', 'Recording', 'Video', 'Attachment']:
-            msg_send += r"Store: Revocation文件夹中%sCommmand: 查看文件[%s]" % (
-                "\n\n", old_msg.get('msg_content', None))
+            msg_send += r"存储: Revocation文件夹中%sCommmand: 查看文件[%s]" % (
+                "\n", old_msg.get('msg_content', None))
             shutil.move(r"./Cache/" + old_msg['msg_content'], r"./Revocation/")
         return msg_send
 
