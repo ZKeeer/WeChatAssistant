@@ -1,6 +1,7 @@
 # -*-encoding:utf-8-*-
 
 import sys
+import os
 import itchat
 from itchat.content import *
 import traceback
@@ -67,9 +68,17 @@ if __name__ == '__main__':
     #itchat.auto_login(hotReload=True)
     # 使用命令行登录，选此条语句，参数选2或者1，根据不同机器的字符宽度决定，大家挨个尝试
     #itchat.auto_login(hotReload=True, enableCmdQR=2)
+         
     if len(sys.argv) > 1:
         if sys.argv[1] == '-t':
             itchat.auto_login(hotReload=True, enableCmdQR=2)
+    else:
+        if sys.platform == 'linux':
+            if "XDG_CURRENT_DESKTOP" in os.environ:
+                itchat.auto_login(hotReload=True)
+            else:
+                itchat.auto_login(hotReload=True, enableCmdQR=2)
         else:
             itchat.auto_login(hotReload=True)
+                
     itchat.run()
