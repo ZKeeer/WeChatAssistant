@@ -1,10 +1,12 @@
 # -*-encoding:utf-8-*-
 
-import sys
 import os
+import sys
+import traceback
+
 import itchat
 from itchat.content import *
-import traceback
+
 from config import Config
 from execution import Execution
 from keeponline import KeepOnline
@@ -64,11 +66,10 @@ def Main(msg):
 
 if __name__ == '__main__':
     config = Config()
-    # 机器上有默认的图片打开程序，使用这个，直接弹出二维码扫码登陆
-    #itchat.auto_login(hotReload=True)
-    # 使用命令行登录，选此条语句，参数选2或者1，根据不同机器的字符宽度决定，大家挨个尝试
-    #itchat.auto_login(hotReload=True, enableCmdQR=2)
-         
+
+    # 机器上有默认的图片打开程序，直接弹出二维码扫码登陆
+    # 否则使用命令行输出二维码
+
     if len(sys.argv) > 1:
         if sys.argv[1] == '-t':
             itchat.auto_login(hotReload=True, enableCmdQR=2)
@@ -80,5 +81,5 @@ if __name__ == '__main__':
                 itchat.auto_login(hotReload=True, enableCmdQR=2)
         else:
             itchat.auto_login(hotReload=True)
-                
+
     itchat.run()
