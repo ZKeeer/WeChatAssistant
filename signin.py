@@ -16,7 +16,7 @@ class SignInMPS:
                 fw.write('')
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
-                fw.write((time.localtime().tm_mday - 1).__str__())
+                fw.write(str(time.localtime().tm_mday - 1))
 
     def GetCommand(self):
         """
@@ -48,13 +48,13 @@ class SignInMPS:
         """
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
-                fw.write(time.localtime().tm_mday.__str__())
-            last_date = (time.localtime().tm_mday - 1).__str__()
+                fw.write(time.strftime("%d", time.localtime()))
+            last_date = str((time.localtime().tm_mday - 1))
         else:
             with open(self.Date_path, 'r') as fr:
                 last_date = fr.read()
 
-        return (last_date == time.localtime().tm_mday.__str__())
+        return (last_date == str(time.localtime().tm_mday))
 
     def SignIn(self):
         """
@@ -73,8 +73,8 @@ class SignInMPS:
                     for item_key_mps in itchat.search_mps(name=item_key):
                         if item_key_mps:
                             itchat.send(sign_list.get(item_key, '签到'), toUserName=item_key_mps['UserName'])
-        with open(self.Date_path, 'w') as fw:
-            fw.write(time.localtime().tm_mday.__str__())
+        with open(self.Date_path, "w") as fw:
+            fw.write(time.strftime("%d", time.localtime()))
 
     def ShowComd(self):
         with open(self.Command_Path, 'r') as fr:
@@ -86,7 +86,7 @@ class SignInMPS:
         return comd_list_retn
 
     def ClearComd(self):
-        with open(self.Command_Path, 'w') as fw:
+        with open(self.Command_Path, "w") as fw:
             fw.write('')
         return True
 
@@ -103,7 +103,7 @@ class SignInMPS:
         if re.findall(mps, file_content):
             comd = re.search("#{}:(.*?)#".format(mps), file_content).group(1)
             file_content = file_content.replace('#{}:{}#'.format(mps, comd), '')
-            with open(self.Command_Path, 'w') as fw:
+            with open(self.Command_Path, "w") as fw:
                 fw.write(file_content)
             return True
         return False

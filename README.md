@@ -25,3 +25,7 @@ PC端微信防撤回代码，多关键词监听<br>
 <strong>查看签到口令</strong>  查看已经存在的公众和和对应的签到口令<br>
 <strong>清空签到口令</strong>  清空所有签到口令<br>
 <strong>截图</strong> 截取当前屏幕发送到文件助手<br>
+
+### Linux环境配置
+
+```pip install -r requirements.txt```

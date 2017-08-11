@@ -1,0 +1,4 @@
+# pyscreenshot is for linux only
+itchat>=1.3.9
+Pillow>=4.2.1
+pyscreenshot>=0.4.2
