@@ -1,6 +1,6 @@
 # -*-encoding:utf-8-*-
 import re
-import time
+from time import localtime, strftime
 import itchat
 from config import Config
 
@@ -36,7 +36,7 @@ class KeywordListener:
     def GetMsgContent(self, msg):
         """
         获取消息内容
-        :param msg:微信消息 
+        :param msg:微信消息
         :return: 获取的消息内容
         """
         msg_content = ""
@@ -61,19 +61,17 @@ class KeywordListener:
             msg_content = msg['Text']
             msg_url = msg['Url']
 
-        return "%s %s" % (msg_content, msg_url)
+        return "{} {}".format(msg_content, msg_url)
 
     def Listener(self, msg):
         """
         处理收到的消息，判断是否有关键词
         :param msg: 微信消息
-        :return: 
+        :return:
         """
         config = Config()
-        mytime = time.localtime()
-        msg_time = "%s/%s/%s %s:%s:%s" % (
-            mytime.tm_year.__str__(), mytime.tm_mon.__str__(), mytime.tm_mday.__str__(), mytime.tm_hour.__str__(),
-            mytime.tm_min.__str__(), mytime.tm_sec.__str__())
+        mytime = localtime()
+        msg_time = strftime("%Y/%m/%d %H:%M:%S", mytime)
 
         isContain = False
 
@@ -88,10 +86,10 @@ class KeywordListener:
             msg_from, msg_group = self.GetMsgFrom(msg)
             msg_content = self.GetMsgContent(msg)
 
-            msg_send = "%s%s%s%s" % ("=" * 4, "Keyword Message", "=" * 5, "\n\n")
-            msg_send += "Time: %s%sWho: %s%s" % (msg_time, "\n\n", msg_from, "\n\n")
+            msg_send = "{0}{1}{0}{2}".format("="*4, "Keyword Message", "\n\n")
+            msg_send += "Time: {0}{1}Who: {2}{1}".format(msg_time, "\n\n", msg_from)
             if msg_group:
-                msg_send += "Group: %s%s" % (msg_group, "\n\n")
-            msg_send += "Content: %s" % (msg_content)
+                msg_send += "Group: {}{}".format(msg_group, "\n\n")
+            msg_send += "Content: {}".format(msg_content)
 
             itchat.send(msg_send, toUserName='filehelper')

@@ -5,7 +5,6 @@ import sys
 import traceback
 
 import itchat
-from itchat.content import *
 
 from config import Config
 from execution import Execution
@@ -23,9 +22,22 @@ kol = KeepOnline()
 
 # 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
 # 没有注册note（通知类）消息，通知类消息一般为：红包 转账 消息撤回提醒等，不具有撤回功能
-@itchat.msg_register([TEXT, PICTURE, MAP, CARD, SHARING, NOTE, RECORDING, ATTACHMENT, VIDEO, FRIENDS],
-                     isFriendChat=True,
-                     isGroupChat=True)
+@itchat.msg_register(
+    [
+        itchat.content.TEXT,
+        itchat.content.PICTURE,
+        itchat.content.MAP,
+        itchat.content.CARD,
+        itchat.content.SHARING,
+        itchat.content.NOTE,
+        itchat.content.RECORDING,
+        itchat.content.ATTACHMENT,
+        itchat.content.VIDEO,
+        itchat.content.FRIENDS,
+    ],
+    isFriendChat=True,
+    isGroupChat=True
+)
 def Main(msg):
     """
     获取微信消息，进行处理指令、关键词监听、撤回消息监听的动作
