@@ -1,15 +1,17 @@
 # WeChatForRevocation<br><br>
 基于<a href="https://github.com/littlecodersh/ItChat.git">itchat</a><br><br>
+贡献者：<a href='https://github.com/XAS-712'>XAS-712</a>、 <a href='https://github.com/SLiNv'>SLiNv</a><br><br>
 环境：windows10 64位；Python版本：python3.5<br>
-<strong>默认</strong>使用系统的图片查看程序打开，<h3>如果使用命令行扫码登录，请在Main.py中按照注释进行选择。</h3><br><br>
-PC端微信防撤回代码，多关键词监听<br>
-2017/05/02 => 调整程序结构，添加关键词监听，支持多关键词<br>
-微信公众号签到功能：添加/删除/查看/清空公众号签到口令<br>
-2017-07-26 => 添加截图功能,仅针对有图形界面的机器,已在linux, windows测试<br>
+<strong>默认</strong>使用系统的图片查看程序打开二维码，如果没有图片打开程序，则输出到命令行<br><br>
 截图功能依赖: <br>
      python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）<br>
      linux: scrot<br>
 
+### Linux环境配置
+
+```pip install -r requirements.txt```
+### Windows用户
+可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br><br>
 
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
 <strong>查看/删除文件[文件名]</strong> e.g. 查看文件[123345234.mp3]<br>
@@ -24,3 +26,4 @@ PC端微信防撤回代码，多关键词监听<br>
 <strong>查看签到口令</strong>  查看已经存在的公众和和对应的签到口令<br>
 <strong>清空签到口令</strong>  清空所有签到口令<br>
 <strong>截图</strong> 截取当前屏幕发送到文件助手<br>
+

@@ -1,10 +1,11 @@
 # -*-encoding:utf-8-*-
 
-import sys
 import os
-import itchat
-from itchat.content import *
+import sys
 import traceback
+
+import itchat
+
 from config import Config
 from execution import Execution
 from keeponline import KeepOnline
@@ -21,9 +22,22 @@ kol = KeepOnline()
 
 # 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
 # 没有注册note（通知类）消息，通知类消息一般为：红包 转账 消息撤回提醒等，不具有撤回功能
-@itchat.msg_register([TEXT, PICTURE, MAP, CARD, SHARING, NOTE, RECORDING, ATTACHMENT, VIDEO, FRIENDS],
-                     isFriendChat=True,
-                     isGroupChat=True)
+@itchat.msg_register(
+    [
+        itchat.content.TEXT,
+        itchat.content.PICTURE,
+        itchat.content.MAP,
+        itchat.content.CARD,
+        itchat.content.SHARING,
+        itchat.content.NOTE,
+        itchat.content.RECORDING,
+        itchat.content.ATTACHMENT,
+        itchat.content.VIDEO,
+        itchat.content.FRIENDS,
+    ],
+    isFriendChat=True,
+    isGroupChat=True
+)
 def Main(msg):
     """
     获取微信消息，进行处理指令、关键词监听、撤回消息监听的动作
@@ -64,11 +78,10 @@ def Main(msg):
 
 if __name__ == '__main__':
     config = Config()
-    # 机器上有默认的图片打开程序，使用这个，直接弹出二维码扫码登陆
-    #itchat.auto_login(hotReload=True)
-    # 使用命令行登录，选此条语句，参数选2或者1，根据不同机器的字符宽度决定，大家挨个尝试
-    #itchat.auto_login(hotReload=True, enableCmdQR=2)
-         
+
+    # 机器上有默认的图片打开程序，直接弹出二维码扫码登陆
+    # 否则使用命令行输出二维码
+
     if len(sys.argv) > 1:
         if sys.argv[1] == '-t':
             itchat.auto_login(hotReload=True, enableCmdQR=2)
@@ -80,5 +93,5 @@ if __name__ == '__main__':
                 itchat.auto_login(hotReload=True, enableCmdQR=2)
         else:
             itchat.auto_login(hotReload=True)
-                
+
     itchat.run()

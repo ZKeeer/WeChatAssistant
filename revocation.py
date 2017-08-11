@@ -94,7 +94,8 @@ class Revocation:
             msg_content = msg['FileName']
             msg['Text'](msg['FileName'])
             if os.path.exists("./Cache/{}".format(msg_content)):
-                msg_content_modify = msg_content.replace('.', '-{}.'.format(random.choice(range(0, 100)).__str__()))
+                msg_content_modify = msg_content.replace(
+                    '.', '-{}.'.format(str(random.choice(range(0, 100)))))
                 os.rename(msg_content, msg_content_modify)
                 msg_content = msg_content_modify
             shutil.move(msg_content, r"./Cache/")
@@ -132,22 +133,28 @@ class Revocation:
                       "msg_content": msg_content, "msg_url": msg_url, "msg_group": msg_group}})
 
     def GetMsgToSend(self, old_msg, msg_time_to_user):
-        msg_send = "%s%s%s%s" % ("=" * 4, "有人撤回了消息", "=" * 4, "\n")
+        msg_send = "{0}{1}{0}{2}".format("="*4, "有人撤回了消息", "\n")
 
-        msg_send += "时间: %s%s谁: %s%s" % (msg_time_to_user, "\n", old_msg.get('msg_from', None), "\n")
+        msg_send += "时间: {0}{1}谁: {2}{1}".format(
+            msg_time_to_user, "\n", old_msg.get('msg_from', None))
 
         if old_msg.get('msg_group', None):
-            msg_send += "群组: %s%s" % (old_msg['msg_group'], "\n")
+            msg_send += "群组: {}{}".format(old_msg['msg_group'], "\n")
 
-        msg_send += "类型: %s%s内容: %s%s" % (
-            old_msg.get('msg_type', None), "\n", old_msg.get('msg_content', None), "\n")
+        msg_send += "类型: {0}{1}内容: {2}{1}".format(
+            old_msg.get('msg_type', None),
+            "\n",
+            old_msg.get('msg_content', None)
+        )
 
         if old_msg['msg_type'] == "Sharing":
-            msg_send += r"网址: %s%s" % (old_msg.get('msg_url', None), "\n")
+            msg_send += r"网址: {}{}".format(old_msg.get('msg_url', None), "\n")
 
         elif old_msg['msg_type'] in ['Picture', 'Recording', 'Video', 'Attachment']:
-            msg_send += r"存储: Revocation文件夹中%sCommmand: 查看文件[%s]" % (
-                "\n", old_msg.get('msg_content', None))
+            msg_send += r"存储: Revocation文件夹中{}Commmand: 查看文件[{}]".format(
+                "\n",
+                old_msg.get('msg_content', None)
+            )
             shutil.move(r"./Cache/" + old_msg['msg_content'], r"./Revocation/")
         return msg_send
 
@@ -158,9 +165,7 @@ class Revocation:
         :return: 无
         """
         mytime = time.localtime()
-        msg_time_touser = "%s/%s/%s %s:%s:%s" % (
-            mytime.tm_year.__str__(), mytime.tm_mon.__str__(), mytime.tm_mday.__str__(), mytime.tm_hour.__str__(),
-            mytime.tm_min.__str__(), mytime.tm_sec.__str__())
+        msg_time_touser = time.strftime("%Y/%m/%d %H:%M:%S", mytime)
 
         # 创建可下载消息内容的存放文件夹，并将暂存在当前目录的文件移动到该文件中
         if not os.path.exists("./Revocation/"):
@@ -169,5 +174,6 @@ class Revocation:
         msg_id, old_msg = self.GetOldMsg(msg)
         if old_msg:
             msg_send = self.GetMsgToSend(old_msg, msg_time_touser)
-            itchat.send(msg_send, toUserName='filehelper')  # 将撤回消息的通知以及细节发送到文件助手
+            # 将撤回消息的通知以及细节发送到文件助手
+            itchat.send(msg_send, toUserName='filehelper')
             self.msg_store.pop(msg_id)

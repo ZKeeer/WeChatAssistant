@@ -8,17 +8,22 @@ class Config:
     def __init__(self):
         if not os.path.exists(CONFIG_PATH):
             with open(CONFIG_PATH, "w")as fw:
+                fw.write("# 关键词格式")
                 fw.write("关键词1#关键词2#关键词n#")  # 每个关键词后面带#，这是标准格式
 
     def GetKeyword(self):
-        with open(CONFIG_PATH, "r")as fr:
-            keyword_list = fr.read().split("#")
+        keyword_file = open(CONFIG_PATH, "r")
+        for line in keyword_file:
+            if line.startswith("#"):
+                continue
+            keyword_list = line.split("#")
+
         return keyword_list
 
     def SetKeyword(self, keyword):
         try:
             with open(CONFIG_PATH, "a") as fw:
-                fw.write("%s#" % (keyword))
+                fw.write("{}#".format(keyword))
             return True
         except:
             return False
@@ -51,9 +56,9 @@ class Config:
         with open(CONFIG_PATH, "r") as fr:
             flist = fr.read().split("#")
 
-        msg_send = "现有的关键词：%s" % ("\n")
+        msg_send = "现有的关键词：\n"
         for item in flist:
             if item:
-                msg_send += "%s%s" % (item, "\n")
+                msg_send += "{}\n".format(item)
 
         return msg_send

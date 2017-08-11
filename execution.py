@@ -7,6 +7,7 @@ from config import Config
 from signin import SignInMPS
 import screenshoot
 
+
 class Execution:
     REVOCATIONPATH = "./Revocation/"
 
@@ -20,10 +21,10 @@ class Execution:
         :param message: 微信消息中提取的命令
         :return: 无
         """
-        # "%s%s%s%s%s关键词" % ("=" * 4, "Command Message", "=" * 4, "\n\n", action)
+        # "%s%s%s%s%s关键词" % ("="*4, "Command Message", "="*4, "\n\n", action)
 
         command = message['Text']
-        msg_send = "{}{}{}{}".format("=" * 4, "System Message", "=" * 4, "\n\n")
+        msg_send = "{0}{1}{0}{2}".format("="*4, "System Message", "\n\n")
         if re.search(r"(.*?)文件\[(.*?)\]", command):
             action, filename = re.search(r"(.*?)文件\[(.*?)\]", command).group(1, 2)
             self.ViewDeleteFile(action, filename)
@@ -100,7 +101,7 @@ class Execution:
         :param filename: 文件名
         :return: 无
         """
-        if action == None or filename == None:
+        if action is None or filename is None:
             itchat.send(r"目前支持的指令: 查看/删除文件[文件名] e.g.查看文件[12345678.jpg]", toUserName="filehelper")
             return
 
@@ -112,40 +113,47 @@ class Execution:
             else:
                 msg_type = "fil"
 
-            itchat.send("@%s@%s" % (msg_type, r"./Revocation/" + filename),
+            itchat.send("@{}@{}".format(msg_type, r"./Revocation/" + filename),
                         toUserName="filehelper")
 
         elif action == r"删除":
             try:
                 if os.path.exists(r"./Revocation/" + filename):
                     os.remove(r"./Revocation/" + filename)
-                    itchat.send("%s%s%s%s撤回助手：删除附件成功" % ("=" * 4, "Command Message", "=" * 4, "\n\n"),
-                                toUserName='filehelper')
+                    msg = "{0}{1}{0}{2}撤回助手：删除附件成功".format(
+                            "="*4, "Command Message", "\n\n")
+                    itchat.send(msg, toUserName='filehelper')
                 return
             except:
-                itchat.send("%s%s%s%s撤回助手：删除附件失败，请重试" % ("=" * 4, "Command Message", "=" * 4, "\n\n"),
-                            toUserName='filehelper')
+                msg = "{0}{1}{0}{2}撤回助手：删除附件失败，请重试".format(
+                        "="*4, "Command Message", "\n\n")
+                itchat.send(msg, toUserName='filehelper')
 
     def ClearAttachmentList(self):
         if self.REVOCATIONPATH:
             try:
                 for item in os.listdir(self.REVOCATIONPATH):
                     os.remove(self.REVOCATIONPATH + item)
-                itchat.send("%s%s%s%s撤回助手：清空附件成功" % ("=" * 4, "Command Message", "=" * 4, "\n\n"),
-                            toUserName='filehelper')
+
+                msg = "{0}{1}{0}{2}撤回助手：清空附件成功".format(
+                    "="*4, "Command Message", "\n\n")
+                itchat.send(msg, toUserName='filehelper')
             except:
-                itchat.send("%s%s%s%s撤回助手：清空附件失败，请重试" % ("=" * 4, "Command Message", "=" * 4, "\n\n"),
-                            toUserName='filehelper')
+                msg = "{0}{1}{0}{2}撤回助手：清空附件失败，请重试".format(
+                    "="*4, "Command Message", "\n\n")
+                itchat.send(msg, toUserName='filehelper')
         else:
-            itchat.send("%s%s%s%s撤回助手：暂时没有附件" % ("=" * 4, "Command Message", "=" * 4, "\n\n"), toUserName='filehelper')
+            msg = "{0}{1}{0}{2}撤回助手：暂时没有附件".format(
+                "="*4, "Command Message", "\n\n")
+            itchat.send(msg, toUserName='filehelper')
 
     # 返回撤回附件所有文件名
     def ReturnAttachmentList(self):
         if os.listdir(self.REVOCATIONPATH):
-            msg_send = r"%s%s%s%s撤回助手：所有储存的附件如下：%s" % ("=" * 4, "Command Message", "=" * 4, "\n\n", "\n")
+            msg_send = r"{0}{1}{0}{2}撤回助手：所有储存的附件如下：{3}".format("="*4, "Command Message", "\n\n", "\n")
             for item in os.listdir(self.REVOCATIONPATH):
-                msg_send += "%s %s" % (item, "\n")
+                msg_send += "{} {}".format(item, "\n")
             itchat.send(msg_send, toUserName="filehelper")
         else:
-            itchat.send(r"%s%s%s%s撤回助手：暂时没有撤回的附件" % ("=" * 4, "Command Message", "=" * 4, "\n\n"),
-                        toUserName="filehelper")
+            msg = r"{0}{1}{0}{2}撤回助手：暂时没有撤回的附件".format("="*4, "Command Message", "\n\n")
+            itchat.send(msg, toUserName="filehelper")
