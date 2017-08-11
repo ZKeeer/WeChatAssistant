@@ -11,7 +11,7 @@
 
 ```pip install -r requirements.txt```
 ### Windows用户
-可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。
+可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br>
 
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
 <strong>查看/删除文件[文件名]</strong> e.g. 查看文件[123345234.mp3]<br>
