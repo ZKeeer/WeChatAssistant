@@ -106,7 +106,7 @@ class Revocation:
             x, y, location = \
                 re.search("<location x=\"(.*?)\" y=\"(.*?)\".*label=\"(.*?)\".*",
                           msg['OriContent']).group(1, 2, 3)
-            if location is None:
+            if not location:
                 msg_content = r"纬度->" + x.__str__() + " 经度->" + y.__str__()
             else:
                 msg_content = r"" + location

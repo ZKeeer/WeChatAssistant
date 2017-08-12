@@ -17,7 +17,7 @@ exec_command = Execution()
 rmsg = Revocation()
 listener = KeywordListener()
 signfunc = SignInMPS()
-kol = KeepOnline()
+keeponline = KeepOnline()
 
 
 # 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
@@ -73,7 +73,7 @@ def Main(msg):
     except BaseException as e:
         traceback.print_exc(file=open('log.txt', 'a'))
     # 功能：保持在线
-    kol.ActiveWX()
+    keeponline.ActiveWX()
 
 
 if __name__ == '__main__':
