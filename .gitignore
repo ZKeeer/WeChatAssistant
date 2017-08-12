@@ -1,0 +1,13 @@
+.idea/
+
+Cache/
+__pycache__/
+
+ScreenShoot/
+
+Command.txt
+Date.txt
+config.txt
+keyword.txt
+itchat.pkl
+log.txt

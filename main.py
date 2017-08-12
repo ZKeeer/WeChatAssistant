@@ -6,7 +6,7 @@ import traceback
 
 import itchat
 
-from config import Config
+from watchword import Keyword
 from execution import Execution
 from keeponline import KeepOnline
 from keywordlistener import KeywordListener
@@ -77,7 +77,7 @@ def Main(msg):
 
 
 if __name__ == '__main__':
-    config = Config()
+    keyword = Keyword()
 
     # 机器上有默认的图片打开程序，直接弹出二维码扫码登陆
     # 否则使用命令行输出二维码
