@@ -34,8 +34,7 @@ class Execution:
 
             keyword = re.search(r"^添加关键词\[(.*?)\]", command).group(1)
             added, msg = self.keyword.SetKeyword(keyword)
-            msg_send = msg_send + msg + "\n\n"
-            msg_send += self.keyword.ShowKeyword()
+            msg_send = msg_send + msg 
 
             itchat.send(msg_send, toUserName='filehelper')
 
@@ -44,8 +43,7 @@ class Execution:
 
             keyword = re.search(r"^删除关键词\[(.*?)\]", command).group(1)
             removed, msg = self.keyword.RemoveKeyword(keyword)
-            msg_send = msg_send + msg + "\n\n"
-            msg_send += self.keyword.ShowKeyword()
+            msg_send = msg_send + msg 
 
             itchat.send(msg_send, toUserName='filehelper')
 
