@@ -1,19 +1,21 @@
 # WeChatForRevocation<br><br>
 基于<a href="https://github.com/littlecodersh/ItChat.git">itchat</a><br><br>
 贡献者：<a href='https://github.com/XAS-712'>XAS-712</a>、 <a href='https://github.com/SLiNv'>SLiNv</a><br><br>
+<hr />
 环境：windows10 64位；Python版本：python3.5<br>
 <strong>默认</strong>使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
 在Linux下如果在纯命令行模式下，则输出到命令行<br><br>
 截图功能依赖: <br>
      python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）<br>
      linux: scrot<br>
-
+<hr />
 ### Linux环境配置
 
 ```pip install -r requirements.txt```
 ### Windows用户
 可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br><br>
-
+<hr />
+<strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong>
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
 <strong>查看/删除文件[文件名]</strong> e.g. 查看文件[123345234.mp3]<br>
 <strong>撤回附件列表</strong> (查看都有哪些保存在电脑中的已撤回附件)<br>
