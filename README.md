@@ -18,18 +18,29 @@
 <strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
 <ul class="contains-task-list">
     <li class="task-list-item">
-        <input class="task-list-item" checked="" disabled="" type="checkbox">
-         撤回消息备份
+        <input class="task-list-item" checked="" disabled="" type="checkbox">撤回消息备份
     </li>
     <li class="task-list-item">
         <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">关键词监听
     </li>
-<input checked="checked" disabled="disabled" type="radio" />自动签到<br>
-<input checked="checked" disabled="disabled" type="radio" />截图<br>
-<input disabled="disabled" type="radio" />消息全备份<br>
-<input disabled="disabled" type="radio" />在备份基础上提供消息查询和分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …<br>
-<input disabled="disabled" type="radio" />定时发送消息；<br>
-<input disabled="disabled" type="radio" />自定义规则消息回复；<br>
+    <li class="task-list-item">
+        <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">自动签到
+    </li>
+    <li class="task-list-item">
+        <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">截图
+    </li>
+    <li class="task-list-item">
+        <input class="task-list-item" disabled="disabled" type="checkbox">消息全备份
+    </li>
+    <li class="task-list-item">
+        <input class="task-list-item" disabled="disabled" type="checkbox">在备份基础上提供消息查询和分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …
+    </li>
+    <li class="task-list-item">
+        <input class="task-list-item" disabled="disabled" type="checkbox">定时发送消息；
+    </li>
+    <li class="task-list-item">
+        <input class="task-list-item" disabled="disabled" type="checkbox">自定义规则消息回复；
+    </li>
 </ul>
 <hr />
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
