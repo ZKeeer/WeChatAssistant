@@ -19,10 +19,10 @@
 <strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
 <ul class="contains-task-list">
     <li class="task-list-item">
-        <input class="task-list-item" checked="" disabled="" type="checkbox">撤回消息备份
+        <input class="task-list-item" checked="" disabled="" type="button">撤回消息备份</input>
     </li>
     <li class="task-list-item">
-        <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">关键词监听
+        <input class="task-list-item" checked="checked" disabled="disabled" type="radio">关键词监听
     </li>
     <li class="task-list-item">
         <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">自动签到
