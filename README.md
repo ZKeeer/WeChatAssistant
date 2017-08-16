@@ -15,6 +15,17 @@
 ### Windows用户
 可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br><br>
 <hr />
+
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="" disabled=""> <del>相似文章的公众号获取</del></li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> 主页热门公众号获取</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> 文章详情页信息</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="" disabled=""> <del>所有类型的解析</del></li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> 验证码识别</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> 接入爬虫框架</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="" disabled=""> 兼容py2</li>
+</ul>
+
 <strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
 <ul class="contains-task-list">
     <li class="task-list-item">
