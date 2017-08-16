@@ -17,32 +17,34 @@
 <hr />
 
 <strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
-<ul class="contains-task-list">
-    <li class="task-list-item">
-        <input class="task-list-item" checked="" disabled="" type="button">撤回消息备份</input>
+<ul type="circle">
+    <li>
+         <del>撤回消息备份</del>
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" checked="checked" disabled="disabled" type="radio">关键词监听
+    <li>
+        <del>关键词监听</del>
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">自动签到
+    <li>
+        <del>自动签到</del>
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" checked="checked" disabled="disabled" type="checkbox">截图
+    <li>
+        <del>截图</del>
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" disabled="disabled" type="checkbox">消息全备份
+    <li>
+        消息全备份
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" disabled="disabled" type="checkbox">在备份基础上提供消息查询和分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …
+    <li>
+        在备份基础上提供消息查询和分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" disabled="disabled" type="checkbox">定时发送消息；
+    <li>
+        定时发送消息
     </li>
-    <li class="task-list-item">
-        <input class="task-list-item" disabled="disabled" type="checkbox">自定义规则消息回复；
+    <li>
+        自定义规则消息回复
     </li>
 </ul>
+
+
 <hr />
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
 <strong>查看/删除文件[文件名]</strong> e.g. 查看文件[123345234.mp3]<br>
