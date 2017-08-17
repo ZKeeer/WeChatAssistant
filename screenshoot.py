@@ -22,7 +22,7 @@ def SC():
         import pyscreenshot as ImageGrab
         im = ImageGrab.grab()
 
-    if im is not None:
+    if im:
         im.save(im_name)
 
     itchat.send("@img@{}".format(im_name), toUserName="filehelper")

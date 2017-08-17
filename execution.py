@@ -113,7 +113,7 @@ class Execution:
         :param filename: 文件名
         :return: 无
         """
-        if action is None or filename is None:
+        if not action or not filename:
             itchat.send(r"目前支持的指令: 查看/删除文件[文件名] e.g.查看文件[12345678.jpg]", toUserName="filehelper")
             return
 
