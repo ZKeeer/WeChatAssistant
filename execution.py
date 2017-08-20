@@ -26,7 +26,7 @@ class Execution:
         # "%s%s%s%s%s关键词" % ("="*4, "Command Message", "="*4, "\n\n", action)
 
         command = message['Text']
-        msg_send = "{0}{1}{0}{2}".format("=" * 4, "System Message", "\n\n")
+        msg_send = "{0}{1}{0}{2}".format("=" * 4, "助手消息", "\n\n")
         if re.match(r"^查看文件\[.*\]", command):
             filename = re.search(r"^查看文件\[(.*?)\]$", command).group(1)
             result = self.ShowFile(filename)
@@ -158,24 +158,24 @@ class Execution:
                     os.remove(self.REVOCATIONPATH + item)
 
                 msg = "{0}{1}{0}{2}撤回助手：清空附件成功".format(
-                    "=" * 4, "Command Message", "\n\n")
+                    "=" * 4, "助手消息", "\n\n")
                 itchat.send(msg, toUserName='filehelper')
             except:
                 msg = "{0}{1}{0}{2}撤回助手：清空附件失败，请重试".format(
-                    "=" * 4, "Command Message", "\n\n")
+                    "=" * 4, "助手消息", "\n\n")
                 itchat.send(msg, toUserName='filehelper')
         else:
             msg = "{0}{1}{0}{2}撤回助手：暂时没有附件".format(
-                "=" * 4, "Command Message", "\n\n")
+                "=" * 4, "助手消息", "\n\n")
             itchat.send(msg, toUserName='filehelper')
 
     # 返回撤回附件所有文件名
     def ReturnAttachmentList(self):
         if os.listdir(self.REVOCATIONPATH):
-            msg_send = r"{0}{1}{0}{2}撤回助手：所有储存的附件如下：{3}".format("=" * 4, "Command Message", "\n\n", "\n")
+            msg_send = r"{0}{1}{0}{2}助手消息：所有储存的附件如下：{3}".format("=" * 4, "Command Message", "\n\n", "\n")
             for item in os.listdir(self.REVOCATIONPATH):
                 msg_send += "{} {}".format(item, "\n")
             itchat.send(msg_send, toUserName="filehelper")
         else:
-            msg = r"{0}{1}{0}{2}撤回助手：暂时没有撤回的附件".format("=" * 4, "Command Message", "\n\n")
+            msg = r"{0}{1}{0}{2}助手消息：暂时没有撤回的附件".format("=" * 4, "Command Message", "\n\n")
             itchat.send(msg, toUserName="filehelper")

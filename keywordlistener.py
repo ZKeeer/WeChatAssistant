@@ -166,7 +166,7 @@ class KeywordListener:
             msg_from, msg_group = self.GetMsgFrom(msg)
             msg_content = self.GetMsgContent(msg)
 
-            msg_send = "{0}{1}{0}{2}".format("="*4, "Keyword Message", "\n\n")
+            msg_send = "{0}{1}{0}{2}".format("="*4, "关键词消息", "\n\n")
             msg_send += "Time: {0}{1}Who: {2}{1}".format(msg_time, "\n\n", msg_from)
             if msg_group:
                 msg_send += "Group: {}{}".format(msg_group, "\n\n")

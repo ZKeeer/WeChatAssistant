@@ -133,7 +133,7 @@ class Revocation:
                       "msg_content": msg_content, "msg_url": msg_url, "msg_group": msg_group}})
 
     def GetMsgToSend(self, old_msg, msg_time_to_user):
-        msg_send = "{0}{1}{0}{2}".format("="*4, "有人撤回了消息", "\n")
+        msg_send = "{0}{1}{0}{2}".format("="*4, "撤回消息", "\n")
 
         msg_send += "时间: {0}{1}谁: {2}{1}".format(
             msg_time_to_user, "\n", old_msg.get('msg_from', None))
