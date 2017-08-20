@@ -6,7 +6,7 @@ import traceback
 
 import itchat
 
-from watchword import Keyword
+from autoreply import MsgAutoReply
 from execution import Execution
 from keeponline import KeepOnline
 from keywordlistener import KeywordListener
@@ -18,6 +18,7 @@ rmsg = Revocation()
 listener = KeywordListener()
 signfunc = SignInMPS()
 keeponline = KeepOnline()
+reply = MsgAutoReply()
 
 
 # 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
@@ -44,7 +45,7 @@ def Main(msg):
     :param msg: 微信消息
     :return: 无
     """
-    # 三大功能之一：处理指令(新添加的功能：签到，其中添加/删除/清空/查看签到口令相关命令和功能未实现)
+    # 功能：处理指令(新添加的功能：签到，其中添加/删除/清空/查看签到口令相关命令和功能未实现)
     itchat.get_friends(update=True)
     if msg['ToUserName'] == "filehelper" and msg['Type'] == "Text":
         try:
@@ -52,7 +53,7 @@ def Main(msg):
         except BaseException as e:
             traceback.print_exc(file=open('log.txt', 'a'))
 
-    # 三大功能之二：撤回消息部分
+    # 功能：撤回消息部分
     try:
         rmsg.SaveMsg(msg)
         rmsg.Revocation(msg)
@@ -60,25 +61,25 @@ def Main(msg):
     except BaseException as e:
         traceback.print_exc(file=open('log.txt', 'a'))
 
-    # 三大功能之三：关键词监听
-    if msg['Type'] in ['Text', 'Sharing', 'Map', 'Card']:
+    # 功能：关键词监听
+    if msg['Type'] in ['Text', 'Sharing', 'Map', 'Card'] and msg['FromUserName'] != 'filehelper':
         try:
             listener.Listener(msg)
         except BaseException as e:
             traceback.print_exc(file=open('log.txt', 'a'))
 
+    # 功能：自动回复
+    if os.path.exists("openautoreply"):
+        reply.AutoReply(msg)
+
     # 功能：公众号签到
-    try:
-        signfunc.SignIn()
-    except BaseException as e:
-        traceback.print_exc(file=open('log.txt', 'a'))
+    signfunc.SignIn()
+
     # 功能：保持在线
     keeponline.ActiveWX()
 
 
 if __name__ == '__main__':
-    keyword = Keyword()
-
     # 机器上有默认的图片打开程序，直接弹出二维码扫码登陆
     # 否则使用命令行输出二维码
 

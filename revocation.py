@@ -151,7 +151,7 @@ class Revocation:
             msg_send += r"网址: {}{}".format(old_msg.get('msg_url', None), "\n")
 
         elif old_msg['msg_type'] in ['Picture', 'Recording', 'Video', 'Attachment']:
-            msg_send += r"存储: Revocation文件夹中{}Commmand: 查看文件[{}]".format(
+            msg_send += r"存储: Revocation文件夹中{}命令: 查看文件[{}]".format(
                 "\n",
                 old_msg.get('msg_content', None)
             )

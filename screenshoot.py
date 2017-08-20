@@ -3,7 +3,6 @@ import os
 import itchat
 import platform
 
-
 def GetImagePath():
     if not os.path.exists("./ScreenShoot/"):
         os.mkdir("./ScreenShoot/")
@@ -26,4 +25,3 @@ def SC():
         im.save(im_name)
 
     itchat.send("@img@{}".format(im_name), toUserName="filehelper")
-    os.remove(im_name)
