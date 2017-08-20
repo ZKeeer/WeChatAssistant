@@ -4,9 +4,9 @@
 <hr />
 <h3>环境相关</h3>
 Python版本：python3.5<br><br>
-### Linux环境配置
-```pip install -r requirements.txt```
-### Windows用户
+### Linux环境配置<br>
+<code>pip install -r requirements.txt</code><br><br>
+### Windows用户<br>
 可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br><br>
 <hr />
 <h3>注意</h3>
