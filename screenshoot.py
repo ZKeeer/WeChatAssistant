@@ -23,5 +23,6 @@ def SC():
 
     if im:
         im.save(im_name)
-
-    itchat.send("@img@{}".format(im_name), toUserName="filehelper")
+        itchat.send("@img@{}".format(im_name), toUserName="filehelper")
+    else:
+        itchat.send("截图失败，请重试。（或许您的设备不支持截图）")
