@@ -7,7 +7,8 @@ Python版本：python3.5<br><br>
 ### Linux环境配置<br>
 <code>pip install -r requirements.txt</code><br><br>
 ### Windows用户<br>
-可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br><br>
+可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br>
+下载最新版替换原先的程序时，只需要替换exe文件，其他的不需要移动或者修改。<br><br>
 <hr />
 <h3>注意</h3>
 <strong>默认</strong>使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
