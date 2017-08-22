@@ -106,6 +106,10 @@ class Execution:
         elif re.match("^打开自动回复$", command):
             msg_send += self.reply.OpenAutoReply()
             itchat.send(msg_send, toUserName='filehelper')
+        elif re.match("^退出程序$", command):
+            itchat.send("退出程序成功", toUserName='filehelper')
+            itchat.logout()
+            os._exit(0)
         else:
             itchat.send(r"暂时支持以下指令：{1}"
                         r"查看/删除文件[文件名]{0}e.g.查看[123345234.mp3]{1}"
@@ -125,6 +129,7 @@ class Execution:
                         r"清空自动回复{1}"
                         r"关闭自动回复{1}"
                         r"打开自动回复{1}"
+                        r"退出程序{1}"
                         r"其他指令暂不支持，请期待最新版本。".format("\n", "\n\n"),
                         toUserName="filehelper")
 
