@@ -90,7 +90,11 @@ class KeywordListener:
         for item in self.keyword_list:
             if item:
                 msg_send += "{}、\n".format(item)
-        return msg_send
+
+        if msg_send == "现有的关键词：\n":
+            return "暂无关键词"
+        else:
+            return msg_send
 
     def GetMsgFrom(self, msg):
         """
@@ -166,7 +170,7 @@ class KeywordListener:
             msg_from, msg_group = self.GetMsgFrom(msg)
             msg_content = self.GetMsgContent(msg)
 
-            msg_send = "{0}{1}{0}{2}".format("="*4, "关键词消息", "\n\n")
+            msg_send = "{0}{1}{0}{2}".format("="*6, "关键词消息", "\n\n")
             msg_send += "Time: {0}{1}Who: {2}{1}".format(msg_time, "\n\n", msg_from)
             if msg_group:
                 msg_send += "Group: {}{}".format(msg_group, "\n\n")

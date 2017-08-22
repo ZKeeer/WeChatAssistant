@@ -2,7 +2,9 @@
 
 import os
 import sys
+import time
 import traceback
+from threading import Thread
 
 import itchat
 
@@ -20,9 +22,12 @@ signfunc = SignInMPS()
 keeponline = KeepOnline()
 reply = MsgAutoReply()
 
+visitors = 4
+visitor_wait = False
+msglist = list()
 
-# 将接收到的消息存放在字典中，当接收到新消息时对字典中超时的消息进行清理
-# 没有注册note（通知类）消息，通知类消息一般为：红包 转账 消息撤回提醒等，不具有撤回功能
+
+# 解析消息，构造{id:xxx, msg:{}, visit:xxx}类型的消息，加入消息队列
 @itchat.msg_register(
     [
         itchat.content.TEXT,
@@ -39,44 +44,96 @@ reply = MsgAutoReply()
     isFriendChat=True,
     isGroupChat=True
 )
-def Main(msg):
-    """
-    获取微信消息，进行处理指令、关键词监听、撤回消息监听的动作
-    :param msg: 微信消息
-    :return: 无
-    """
-    # 功能：处理指令(新添加的功能：签到，其中添加/删除/清空/查看签到口令相关命令和功能未实现)
-    itchat.get_friends(update=True)
-    if msg['ToUserName'] == "filehelper" and msg['Type'] == "Text":
-        try:
-            exec_command.Execution(msg)
-        except BaseException as e:
-            traceback.print_exc(file=open('log.txt', 'a'))
+def msg_acceptor(msg):
+    msg['Visitor'] = 0
+    msglist.append(msg)
 
-    # 功能：撤回消息部分
-    try:
-        rmsg.SaveMsg(msg)
-        rmsg.Revocation(msg)
-        rmsg.ClearTimeOutMsg()
-    except BaseException as e:
-        traceback.print_exc(file=open('log.txt', 'a'))
 
-    # 功能：关键词监听
-    if msg['Type'] in ['Text', 'Sharing', 'Map', 'Card'] and msg['FromUserName'] != 'filehelper':
-        try:
-            listener.Listener(msg)
-        except BaseException as e:
-            traceback.print_exc(file=open('log.txt', 'a'))
+def clearmsglist_func():
+    while True:
+        if msglist:
+            if int(msglist[0].get("Visitor", 0)) >= visitors:
+                msglist.pop(0)
 
-    # 功能：自动回复
+
+def Pretreat(func):
+    def wapper(*args, **kwargs):
+        msgid = ''
+        while True:
+
+            # 消息队列为空，等待
+            while not msglist:
+                pass
+
+            # 头元素是已经访问过的消息，继续下一次循环
+            try:
+                if msglist[0].get('MsgId', '') == msgid:
+                    continue
+            except BaseException as e:
+                continue
+
+            # 消息队列不为空并且头元素是未访问过的消息，进行处理。
+            try:
+                func()
+            except BaseException as e:
+                traceback.print_exc(file=open('log.txt', 'a'))
+            finally:
+                # 最终必须更新消息ID，证明访问过该消息
+                msgid = msglist[0].get('MsgId', '')
+                # 互斥锁，该消息的访问次数的修改必须是串行
+                global visitor_wait
+                while visitor_wait:
+                    pass
+                visitor_wait = True
+                msglist[0]['Visitor'] = (msglist[0].get('Visitor', 0) + 1)
+                visitor_wait = False
+
+
+    return wapper
+
+
+@Pretreat
+def execute_func():
+    # 1.文件助手命令
+    if msglist[0].get('ToUserName', "") == "filehelper" and msglist[0].get('Type', "") == "Text":
+        exec_command.Execution(msglist[0])
+
+
+@Pretreat
+def revocation_func():
+    # 2.撤回消息
+    rmsg.SaveMsg(msglist[0])
+    rmsg.Revocation(msglist[0])
+    rmsg.ClearTimeOutMsg()
+
+
+@Pretreat
+def keywordlisten_func():
+    # 3.关键词监听
+    if msglist[0].get('Type', '') in ['Text', 'Sharing', 'Map', 'Card'] \
+            and msglist[0].get('FromUserName', '') != 'filehelper':
+        listener.Listener(msglist[0])
+
+
+@Pretreat
+def autoreply_func():
+    # 4.自动回复
     if os.path.exists("openautoreply"):
-        reply.AutoReply(msg)
+        reply.AutoReply(msglist[0])
 
-    # 功能：公众号签到
-    signfunc.SignIn()
 
-    # 功能：保持在线
-    keeponline.ActiveWX()
+def signin_func():
+    while True:
+        # 功能：公众号签到
+        signfunc.SignIn()
+        time.sleep(3600)
+
+
+def keeponline_func():
+    while True:
+        # 功能：保持在线
+        keeponline.ActiveWX()
+        time.sleep(3600)
 
 
 if __name__ == '__main__':
@@ -95,4 +152,29 @@ if __name__ == '__main__':
         else:
             itchat.auto_login(hotReload=True)
 
-    itchat.run()
+    run_thread = Thread(target=itchat.run)
+    clearmsglist_thread = Thread(target=clearmsglist_func)
+    execute_thread = Thread(target=execute_func)
+    revocation_thread = Thread(target=revocation_func)
+    keywordlisten_thread = Thread(target=keywordlisten_func)
+    autoreply_thread = Thread(target=autoreply_func)
+    signin_thread = Thread(target=signin_func)
+    keeponline_thread = Thread(target=keeponline_func)
+
+    run_thread.start()
+    execute_thread.start()
+    revocation_thread.start()
+    keywordlisten_thread.start()
+    autoreply_thread.start()
+    signin_thread.start()
+    keeponline_thread.start()
+    clearmsglist_thread.start()
+
+    run_thread.join()
+    execute_thread.join()
+    revocation_thread.join()
+    keywordlisten_thread.join()
+    autoreply_thread.join()
+    signin_thread.join()
+    keeponline_thread.join()
+    clearmsglist_thread.join()

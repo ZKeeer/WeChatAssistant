@@ -85,14 +85,17 @@ class SignInMPS:
             fw.write(time.strftime("%d", time.localtime()))
 
     def ShowComd(self):
-        t_list = self.GetCommand()
+        t_dict = self.GetCommand()
         result = ""
         try:
-            for item in t_list:
-                result += "{}:{}、\n".format(item[0], item[1])
+            for k,v in zip(t_dict.keys(), t_dict.values()):
+                result += "{}:{}、\n".format(k,v)
         except BaseException as e:
             pass
-        return result
+        if result:
+            return result
+        else:
+            return "暂无签到口令"
 
     def ClearComd(self):
         db_connect = sqlite3.connect(self.db)

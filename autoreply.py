@@ -33,12 +33,14 @@ class MsgAutoReply:
         self.reply_rule = self.GetRule()
         for k in self.reply_rule.keys():
             try:
-                #print("自动回复", k, msg['Content'])
                 if k in msg['Content'] or k in msg['Text']:
                     msg_reply = self.reply_rule.get(k, "我收到消息了，待会儿回复")
                     msg_reply += " [来自ZKeeer微信助手]"
                     time.sleep(0.3)
+                    # 发送给好友自动回复内容
                     itchat.send(msg_reply, toUserName=msg['FromUserName'])
+                    # 好友消息，自动回复消息备份发送至文件助手
+                    # 待完成
                     return
             except BaseException as e:
                 continue
@@ -130,4 +132,7 @@ class MsgAutoReply:
         reslut = ""
         for k, v in zip(tmp_dict.keys(), tmp_dict.values()):
             reslut += "{}:{}、\n".format(k, v)
-        return reslut
+        if reslut:
+            return reslut
+        else:
+            return "暂无自动回复内容"
