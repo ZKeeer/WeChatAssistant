@@ -2,12 +2,99 @@
 import re
 from time import localtime, strftime
 import itchat
-from config import Config
+import config
+import sqlite3
 
 
 class KeywordListener:
     def __init__(self):
-        pass
+        self.db = config.database
+        self.table = config.keywordlisten_table
+        self.keyword_list = []
+        db_connect = sqlite3.connect(self.db)
+        try:
+            db_connect.execute("""CREATE TABLE IF NOT EXISTS {} (KEYWORD TEXT NOT NULL);""".format(self.table))
+            db_connect.commit()
+            self.keyword_list = self.GetKeyword()
+        except BaseException as e:
+            db_connect.rollback()
+        finally:
+            db_connect.close()
+
+    def AddKeyword(self, keyword):
+        db_connect = sqlite3.connect(self.db)
+        db_cursor = db_connect.cursor()
+        try:
+            if db_cursor.execute("""SELECT * FROM {} WHERE KEYWORD = '{}';""".format(self.table, keyword)).fetchall():
+                return "关键词已存在，不用重复添加"
+            else:
+                db_connect.execute("""INSERT INTO {} VALUES ('{}');""".format(self.table,keyword))
+                db_connect.commit()
+                return "添加成功"
+        except BaseException as e:
+            db_connect.rollback()
+            return "添加失败，请重试"
+        finally:
+            db_cursor.close()
+            db_connect.close()
+            self.keyword_list = self.GetKeyword()
+
+    def DeleteKeyword(self, kw):
+        db_connect = sqlite3.connect(self.db)
+        db_cursor = db_connect.cursor()
+        try:
+            if db_cursor.execute("""SELECT * FROM {} WHERE KEYWORD = '{}';""".format(self.table, kw)).fetchall():
+                db_connect.execute("""DELETE FROM {} WHERE KEYWORD = '{}';""".format(self.table, kw))
+                db_connect.commit()
+                return "删除关键词成功"
+            else:
+                return "您要删除的关键词不存在，请重试"
+        except BaseException as e:
+            db_connect.rollback()
+            return "删除失败，请重试"
+        finally:
+            db_cursor.close()
+            db_connect.close()
+            self.keyword_list = self.GetKeyword()
+
+    def ClearKeyword(self):
+        db_connect = sqlite3.connect(self.db)
+        try:
+            db_connect.execute("""DELETE FROM {};""".format(self.table))
+            db_connect.commit()
+            return "清空关键词成功"
+        except BaseException as e:
+            db_connect.rollback()
+            return "清空关键词失败，请重试"
+        finally:
+            db_connect.close()
+            self.keyword_list = self.GetKeyword()
+
+    def GetKeyword(self):
+        db_connect = sqlite3.connect(self.db)
+        db_cursor = db_connect.cursor()
+        result_list = []
+        try:
+            tmp = db_cursor.execute("""SELECT * FROM {};""".format(self.table)).fetchall()
+            for item in tmp:
+                result_list.append(item[0])
+        except BaseException as e:
+            pass
+        finally:
+            db_cursor.close()
+            db_connect.close()
+            return result_list
+
+    def ShowKeyword(self):
+        msg_send = "现有的关键词：\n"
+        for item in self.keyword_list:
+            if item:
+                msg_send += "{}、\n".format(item)
+
+        if msg_send == "现有的关键词：\n":
+            return "暂无关键词"
+        else:
+            return msg_send
 
     def GetMsgFrom(self, msg):
         """
@@ -69,14 +156,11 @@ class KeywordListener:
         :param msg: 微信消息
         :return:
         """
-        config = Config()
         mytime = localtime()
         msg_time = strftime("%Y/%m/%d %H:%M:%S", mytime)
 
         isContain = False
-
-        keyword_list = config.GetKeyword()
-        for item in keyword_list:
+        for item in self.keyword_list:
             if item:
                 if item in msg.get('Text', "") or item in msg.get('Content', ""):
                     isContain = True
@@ -86,7 +170,7 @@ class KeywordListener:
             msg_from, msg_group = self.GetMsgFrom(msg)
             msg_content = self.GetMsgContent(msg)
 
-            msg_send = "{0}{1}{0}{2}".format("="*4, "Keyword Message", "\n\n")
+            msg_send = "{0}{1}{0}{2}".format("="*6, "关键词消息", "\n\n")
             msg_send += "Time: {0}{1}Who: {2}{1}".format(msg_time, "\n\n", msg_from)
             if msg_group:
                 msg_send += "Group: {}{}".format(msg_group, "\n\n")

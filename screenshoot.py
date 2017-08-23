@@ -1,7 +1,8 @@
-from time import time
 import os
-import itchat
 import platform
+from time import time
+
+import itchat
 
 
 def GetImagePath():
@@ -15,15 +16,29 @@ def SC():
     im_name = "{}{}.{}".format(im_path, str(time()), "png")
 
     im = None
+
     if platform.system() == 'Windows' or platform.system() == 'Darwin':
         from PIL import ImageGrab
-        im = ImageGrab.grab()
+        try:
+            im = ImageGrab.grab()
+        except OSError as e:
+            itchat.send("截图失败，请重试。（或许您的设备不支持截图）", toUserName="filehelper")
+            return
+
     elif platform.system() == 'Linux':
         import pyscreenshot as ImageGrab
-        im = ImageGrab.grab()
+        try:
+            im = ImageGrab.grab()
+        except OSError as e:
+            itchat.send("截图失败，请重试。（或许您的设备不支持截图）", toUserName="filehelper")
+            return
 
-    if im:
-        im.save(im_name)
 
-    itchat.send("@img@{}".format(im_name), toUserName="filehelper")
-    os.remove(im_name)
+    im.save(im_name)
+    if os.path.exists(im_name):
+        try:
+            itchat.send("@img@{}".format(im_name), toUserName="filehelper")
+        except BaseException as e:
+            itchat.send("发送截图失败，请重试。", toUserName="filehelper")
+    else:
+        itchat.send("截图失败，请重试。", toUserName="filehelper")
