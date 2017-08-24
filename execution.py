@@ -91,7 +91,7 @@ class Execution:
             msg_send += self.reply.AddRule(keyword, content)
             itchat.send(msg_send, toUserName="filehelper")
         elif re.match("^删除自动回复#.*#$", command):
-            keyword = re.search("^添加自动回复#(.*?)#$", command).group(1)
+            keyword = re.search("^删除自动回复#(.*?)#$", command).group(1)
             msg_send += self.reply.DeleteRule(keyword)
             itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^清空自动回复$", command):

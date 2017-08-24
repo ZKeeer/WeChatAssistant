@@ -31,9 +31,23 @@ class MsgAutoReply:
 
     def AutoReply(self, msg):
         self.reply_rule = self.GetRule()
+
+        msg_from = ""
+        result = itchat.search_friends(userName=msg['FromUserName'])
+        if result:
+            if result['RemarkName']:
+                msg_from = result['RemarkName']  # 消息发送人备注
+            elif result['NickName']:  # 消息发送人昵称
+                msg_from = result['NickName']  # 消息发送人昵称
+            else:
+                msg_from = r"读取好友失败"
+        else:
+            msg_from = msg.get('ActualNickName', "")
+
+
         for k in self.reply_rule.keys():
             try:
-                if k in msg['Content'] or k in msg['Text']:
+                if k in msg['Content'] or k in msg['Text'] or k in msg_from:
                     msg_reply = self.reply_rule.get(k, "我收到消息了，待会儿回复")
                     msg_reply += " [来自ZKeeer微信助手]"
                     time.sleep(0.3)
