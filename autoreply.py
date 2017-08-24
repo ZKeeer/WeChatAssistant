@@ -98,7 +98,7 @@ class MsgAutoReply:
         db_cursor = db_connect.cursor()
         try:
             if db_cursor.execute("""SELECT * FROM {} WHERE KEYWORD = '{}';""".format(self.table, kw)).fetchall():
-                db_connect.execute("""DELETE FROM {} WHERE KEYWORD = '';""".format(self.table, kw))
+                db_connect.execute("""DELETE FROM {} WHERE KEYWORD = '{}';""".format(self.table, kw))
                 db_connect.commit()
                 return "删除成功"
             else:
