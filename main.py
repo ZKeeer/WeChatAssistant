@@ -54,7 +54,8 @@ def clearmsglist_func():
         if msglist:
             if int(msglist[0].get("Visitor", 0)) >= visitors:
                 msglist.pop(0)
-
+        else:
+            time.sleep(0.1)
 
 def Pretreat(func):
     def wapper(*args, **kwargs):
@@ -63,7 +64,7 @@ def Pretreat(func):
 
             # 消息队列为空，等待
             while not msglist:
-                pass
+                time.sleep(0.1)
 
             # 头元素是已经访问过的消息，继续下一次循环
             try:
@@ -83,7 +84,7 @@ def Pretreat(func):
                 # 互斥锁，该消息的访问次数的修改必须是串行
                 global visitor_wait
                 while visitor_wait:
-                    pass
+                    time.sleep(0.1)
                 visitor_wait = True
                 msglist[0]['Visitor'] = (msglist[0].get('Visitor', 0) + 1)
                 visitor_wait = False
