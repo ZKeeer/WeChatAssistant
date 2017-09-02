@@ -84,7 +84,7 @@ def Pretreat(func):
                 # 互斥锁，该消息的访问次数的修改必须是串行
                 global visitor_wait
                 while visitor_wait:
-                    time.sleep(0.1)
+                    pass
                 visitor_wait = True
                 msglist[0]['Visitor'] = (msglist[0].get('Visitor', 0) + 1)
                 visitor_wait = False
