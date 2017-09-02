@@ -1,6 +1,7 @@
 # WeChatForRevocation<br><br>
 基于<a href="https://github.com/littlecodersh/ItChat.git">itchat</a><br><br>
-贡献者：<a href='https://github.com/XAS-712'>XAS-712</a>、 <a href='https://github.com/SLiNv'>SLiNv</a>、 <a href="https://github.com/linwencai">linwencai</a><br><br>
+贡献者：<a href='https://github.com/XAS-712'>XAS-712</a>、 <a href='https://github.com/SLiNv'>SLiNv</a>、 <a href="https://github.com/linwencai">linwencai</a><br>
+欢迎好的idea和pull request<br><br>
 <hr />
 <h3>环境相关</h3>
 Python版本：python3.5<br><br>
