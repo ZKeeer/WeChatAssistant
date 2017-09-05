@@ -82,7 +82,7 @@ class SignInMPS:
                         if item_key_mps:
                             itchat.send(sign_list.get(item_key, '签到'), toUserName=item_key_mps['UserName'])
         with open(self.Date_path, "w") as fw:
-            fw.write(time.strftime("%d", time.localtime()))
+            fw.write(str(time.localtime().tm_mday))
 
     def ShowComd(self):
         t_dict = self.GetCommand()
