@@ -56,7 +56,7 @@ class SignInMPS:
         """
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
-                fw.write(time.strftime("%d", time.localtime()))
+                fw.write(str(time.localtime().tm_mday))
             last_date = str((time.localtime().tm_mday - 1))
         else:
             with open(self.Date_path, 'r') as fr:
