@@ -1,13 +1,15 @@
 import os
+import random
 import re
 
 import itchat
 
+import config
 import screenshoot
 from autoreply import MsgAutoReply
 from keywordlistener import KeywordListener as Keyword
 from signin import SignInMPS
-
+from takephoto import TakeGIF, TakePhoto
 
 class Execution:
     REVOCATIONPATH = "./Revocation/"
@@ -26,7 +28,7 @@ class Execution:
         # "%s%s%s%s%s关键词" % ("="*4, "Command Message", "="*4, "\n\n", action)
 
         command = message['Text']
-        msg_send = "{0}{1}{0}{2}".format("=" * 6, "助手消息", "\n\n")
+        msg_send = "{0}{1}{0}{2}".format("=" * 8, "助手消息", "\n\n")
         if re.match(r"^查看文件\[.*\]", command):
             filename = re.search(r"^查看文件\[(.*?)\]$", command).group(1)
             result = self.ShowFile(filename)
@@ -106,6 +108,34 @@ class Execution:
         elif re.match("^打开自动回复$", command):
             msg_send += self.reply.OpenAutoReply()
             itchat.send(msg_send, toUserName='filehelper')
+        elif re.match("^拍照$", command):
+            img_name = TakePhoto()
+            if img_name:
+                itchat.send("@img@{}".format(img_name), toUserName='filehelper')
+            else:
+                msg_send += "拍照失败，请重试"
+                itchat.send(msg_send, toUserName='filehelper')
+        elif re.match("^拍动图\d{0,2}$", command):
+            seconds = re.findall("^拍动图(\d+)",command)
+            if seconds:
+                seconds = int(seconds[0])
+                if seconds not in range(1,61):
+                    msg_send += "时间输入错误，请重试"
+                    itchat.send(msg_send, toUserName='filehelper')
+                    return
+            else:
+                seconds = 5
+            img_name = TakeGIF(seconds)
+            if img_name:
+                itchat.send("@img@{}".format(img_name), toUserName='filehelper')
+            else:
+                msg_send += "拍照失败，请重试"
+                itchat.send(msg_send, toUserName='filehelper')
+        elif re.match("^今天吃什么$", command):
+            today_choice = random.choice(config.today_menu)
+            emotion = random.choice(config.emoticons)
+            msg_send += "今天就吃 {} 吧{}{}".format(today_choice, '\n', emotion)
+            itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^退出程序$", command):
             itchat.send("退出程序成功", toUserName='filehelper')
             itchat.logout()
@@ -129,6 +159,7 @@ class Execution:
                         r"清空自动回复{1}"
                         r"关闭自动回复{1}"
                         r"打开自动回复{1}"
+                        r"今天吃什么{1}"
                         r"退出程序{1}"
                         r"其他指令暂不支持，请期待最新版本。".format("\n", "\n\n"),
                         toUserName="filehelper")
@@ -137,7 +168,7 @@ class Execution:
         if not os.path.exists(r"./Revocation/" + filename):
             return "文件:{} 不存在".format(filename)
 
-        if re.search(r"png|jpg|bmp|jpeg|gif", filename):
+        if re.search(r"png|jpg|bmp|jpeg|gif|webp", filename):
             msg_type = "img"
         elif re.search(r"avi|rm|map4|wmv", filename):
             msg_type = "vid"

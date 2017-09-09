@@ -88,8 +88,8 @@ class SignInMPS:
         t_dict = self.GetCommand()
         result = ""
         try:
-            for k,v in zip(t_dict.keys(), t_dict.values()):
-                result += "{}:{}、\n".format(k,v)
+            for k, v in zip(t_dict.keys(), t_dict.values()):
+                result += "{}:{}、{}".format(k, v, '\n')
         except BaseException as e:
             pass
         if result:

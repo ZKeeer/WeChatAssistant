@@ -50,7 +50,7 @@ class MsgAutoReply:
                 if k in msg['Content'] or k in msg['Text'] or k in msg_from:
                     msg_reply = self.reply_rule.get(k, "我收到消息了，待会儿回复")
                     msg_reply += " [来自ZKeeer微信助手]"
-                    time.sleep(0.3)
+                    time.sleep(0.5)
                     # 发送给好友自动回复内容
                     itchat.send(msg_reply, toUserName=msg['FromUserName'])
                     # 好友消息，自动回复消息备份发送至文件助手

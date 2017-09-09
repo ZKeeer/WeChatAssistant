@@ -1,9 +1,11 @@
 # -*-encoding:utf-8-*-
 import re
-from time import localtime, strftime
-import itchat
-import config
 import sqlite3
+from time import localtime, strftime
+
+import itchat
+
+import config
 
 
 class KeywordListener:
@@ -28,7 +30,7 @@ class KeywordListener:
             if db_cursor.execute("""SELECT * FROM {} WHERE KEYWORD = '{}';""".format(self.table, keyword)).fetchall():
                 return "关键词已存在，不用重复添加"
             else:
-                db_connect.execute("""INSERT INTO {} VALUES ('{}');""".format(self.table,keyword))
+                db_connect.execute("""INSERT INTO {} VALUES ('{}');""".format(self.table, keyword))
                 db_connect.commit()
                 return "添加成功"
         except BaseException as e:
@@ -37,7 +39,6 @@ class KeywordListener:
         finally:
             db_cursor.close()
             db_connect.close()
-            self.keyword_list = self.GetKeyword()
 
     def DeleteKeyword(self, kw):
         db_connect = sqlite3.connect(self.db)
@@ -55,7 +56,6 @@ class KeywordListener:
         finally:
             db_cursor.close()
             db_connect.close()
-            self.keyword_list = self.GetKeyword()
 
     def ClearKeyword(self):
         db_connect = sqlite3.connect(self.db)
@@ -68,7 +68,6 @@ class KeywordListener:
             return "清空关键词失败，请重试"
         finally:
             db_connect.close()
-            self.keyword_list = self.GetKeyword()
 
     def GetKeyword(self):
         db_connect = sqlite3.connect(self.db)
@@ -86,6 +85,7 @@ class KeywordListener:
             return result_list
 
     def ShowKeyword(self):
+        self.keyword_list = self.GetKeyword()
         msg_send = "现有的关键词：\n"
         for item in self.keyword_list:
             if item:
@@ -115,9 +115,7 @@ class KeywordListener:
             if msg['ActualUserName'] == itchat.get_friends()[0]['UserName']:
                 return
             if itchat.search_chatrooms(userName=msg['FromUserName']):
-                msg_group += r'[ '
-                msg_group += itchat.search_chatrooms(userName=msg['FromUserName'])['NickName']
-                msg_group += r' ]'
+                msg_group += "[ {} ]".format(itchat.search_chatrooms(userName=msg['FromUserName'])['NickName'])
         return msg_from, msg_group
 
     def GetMsgContent(self, msg):
@@ -139,10 +137,10 @@ class KeywordListener:
             x, y, location = \
                 re.search("<location x=\"(.*?)\" y=\"(.*?)\".*label=\"(.*?)\".*",
                           msg['OriContent']).group(1, 2, 3)
-            if not location:
-                msg_content = r"纬度->" + x.__str__() + " 经度->" + y.__str__()
+            if location:
+                msg_content = location
             else:
-                msg_content = r"" + location
+                msg_content = r"纬度->{} 经度->{}".format(x, y)
 
         elif msg['Type'] == 'Sharing':
             msg_content = msg['Text']
@@ -156,6 +154,7 @@ class KeywordListener:
         :param msg: 微信消息
         :return:
         """
+        self.keyword_list = self.GetKeyword()
         mytime = localtime()
         msg_time = strftime("%Y/%m/%d %H:%M:%S", mytime)
 
@@ -170,9 +169,9 @@ class KeywordListener:
             msg_from, msg_group = self.GetMsgFrom(msg)
             msg_content = self.GetMsgContent(msg)
 
-            msg_send = "{0}{1}{0}{2}".format("="*6, "关键词消息", "\n\n")
+            msg_send = "{0}{1}{0}{2}".format("=" * 6, "关键词消息", "\n\n")
             msg_send += "Time: {0}{1}Who: {2}{1}".format(msg_time, "\n\n", msg_from)
-            if msg_group:
+            if re.findall(r"\[(.*)\]", msg_group):
                 msg_send += "Group: {}{}".format(msg_group, "\n\n")
             msg_send += "Content: {}".format(msg_content)
 
