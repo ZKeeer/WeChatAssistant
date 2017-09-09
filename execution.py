@@ -40,7 +40,7 @@ class Execution:
                 itchat.send(msg_send, toUserName='filehelper')
 
         elif re.match(r"^删除文件\[.*\]", command):
-            filename = re.search(r"^查看文件\[(.*?)\]$", command).group(1)
+            filename = re.search(r"^删除文件\[(.*?)\]$", command).group(1)
             msg_send += self.DeleteFile(filename)
             itchat.send(msg_send, toUserName='filehelper')
 
