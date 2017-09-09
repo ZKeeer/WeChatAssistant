@@ -34,6 +34,8 @@ Python版本：python3.5<br><br>
     <li>
         <del>截图</del>
     </li>
+    <li><del>今天吃什么</del>
+    </li>
     <li>
         消息全备份
     </li>
@@ -71,4 +73,5 @@ Python版本：python3.5<br><br>
 <strong>清空自动回复</strong> 清空所有的自定义回复规则<br>
 <strong>关闭自动回复</strong> <br>
 <strong>打开自动回复</strong> <br>
+<strong>今天吃什么</strong> 纯粹是闹着玩的功能 <br>
 <strong>退出程序</strong> <br>
