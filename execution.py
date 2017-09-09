@@ -9,7 +9,8 @@ import screenshoot
 from autoreply import MsgAutoReply
 from keywordlistener import KeywordListener as Keyword
 from signin import SignInMPS
-from takephoto import TakeGIF, TakePhoto
+from takephoto import TakeGIF
+
 
 class Execution:
     REVOCATIONPATH = "./Revocation/"
@@ -75,25 +76,25 @@ class Execution:
             msg_send += self.snin.ClearComd()
             itchat.send(msg_send, toUserName='filehelper')
 
-        elif re.match("^添加签到口令.*#$", command):
-            mps, cmd = re.search("^添加签到口令#(.*?):(.*?)#$", command).group(1, 2)
+        elif re.match("^添加签到口令\[.*?\]$", command):
+            mps, cmd = re.search("^添加签到口令\[(.*?):(.*?)\]$", command).group(1, 2)
             self.snin.AddComd(mps, cmd)
-            msg_send += "添加签到口令【{}:{}】成功".format(mps, cmd)
+            msg_send += "添加签到口令[{}:{}]成功".format(mps, cmd)
             itchat.send(msg_send, toUserName='filehelper')
 
-        elif re.match("^删除签到口令#.*#$", command):
-            mps = re.search("^删除签到口令#(.*?)#$", command).group(1)
+        elif re.match("^删除签到口令\[.*?\]$", command):
+            mps = re.search("^删除签到口令\[(.*?)\]$", command).group(1)
             msg_send += self.snin.DeleteComd(mps)
             itchat.send(msg_send, toUserName='filehelper')
 
         elif re.match("^截图$", command):
             screenshoot.SC()
-        elif re.match("^添加自动回复#.*#$", command):
-            keyword, content = re.search("^添加自动回复#(.*?):(.*?)#$", command).group(1, 2)
+        elif re.match("^添加自动回复\[.*?\]$", command):
+            keyword, content = re.search("^添加自动回复\[(.*?):(.*?)\]$", command).group(1, 2)
             msg_send += self.reply.AddRule(keyword, content)
             itchat.send(msg_send, toUserName="filehelper")
-        elif re.match("^删除自动回复#.*#$", command):
-            keyword = re.search("^删除自动回复#(.*?)#$", command).group(1)
+        elif re.match("^删除自动回复\[.*\]$", command):
+            keyword = re.search("^删除自动回复\[(.*?)\]$", command).group(1)
             msg_send += self.reply.DeleteRule(keyword)
             itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^清空自动回复$", command):
@@ -109,17 +110,25 @@ class Execution:
             msg_send += self.reply.OpenAutoReply()
             itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^拍照$", command):
-            img_name = TakePhoto()
+            msg_send+="功能未开发，敬请期待"
+            itchat.send(msg_send, toUserName='filehelper')
+            """
+           img_name = TakePhoto()
             if img_name:
                 itchat.send("@img@{}".format(img_name), toUserName='filehelper')
             else:
                 msg_send += "拍照失败，请重试"
                 itchat.send(msg_send, toUserName='filehelper')
+            """
+
         elif re.match("^拍动图\d{0,2}$", command):
-            seconds = re.findall("^拍动图(\d+)",command)
+            msg_send+="功能未开发，敬请期待"
+            itchat.send(msg_send, toUserName='filehelper')
+            """
+            seconds = re.findall("^拍动图(\d+)", command)
             if seconds:
                 seconds = int(seconds[0])
-                if seconds not in range(1,61):
+                if seconds not in range(1, 61):
                     msg_send += "时间输入错误，请重试"
                     itchat.send(msg_send, toUserName='filehelper')
                     return
@@ -131,6 +140,7 @@ class Execution:
             else:
                 msg_send += "拍照失败，请重试"
                 itchat.send(msg_send, toUserName='filehelper')
+            """
         elif re.match("^今天吃什么$", command):
             today_choice = random.choice(config.today_menu)
             emotion = random.choice(config.emoticons)
@@ -149,13 +159,13 @@ class Execution:
                         r"删除关键词[关键词]{0}e.g.删除关键词[在不在]{1}"
                         r"清空关键词  清空已经设置的所有关键词{1}"
                         r"查看关键词  查看目前设置的关键词{1}"
-                        r"添加签到口令#公众号:签到口令#{0}e.g.添加签到口令#招商银行信用卡:签到#{1}"
-                        r"删除签到口令#公众号#{0}e.g.删除签到口令#招商银行信用卡#{1}"
+                        r"添加签到口令[公众号:签到口令]{0}e.g.添加签到口令[招商银行信用卡:签到]{1}"
+                        r"删除签到口令[公众号]{0}e.g.删除签到口令[招商银行信用卡]{1}"
                         r"查看签到口令  查看已经存在的公众和和对应的签到口令{1}"
                         r"清空签到口令  清空所有签到口令{1}"
                         r"截图 截取运行本程序的机器当前界面{1}"
-                        r"添加自动回复#针对的关键词:回复内容#{0}e.g.添加自动回复#在不在:我现在有事情，待会儿回复你#{1}"
-                        r"删除自动回复#针对的关键词#{0}e.g.删除自动回复#在不在#{1}"
+                        r"添加自动回复[针对的关键词:回复内容]{0}e.g.添加自动回复[在不在:我现在有事情，待会儿回复你]{1}"
+                        r"删除自动回复[针对的关键词]{0}e.g.删除自动回复[在不在]{1}"
                         r"清空自动回复{1}"
                         r"关闭自动回复{1}"
                         r"打开自动回复{1}"
