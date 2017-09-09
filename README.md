@@ -22,35 +22,16 @@ Python版本：python3.5<br><br>
 
 <strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
 <ul type="circle">
-    <li>
-         <del>撤回消息备份</del>
-    </li>
-    <li>
-        <del>关键词监听</del>
-    </li>
-    <li>
-        <del>自动签到</del>
-    </li>
-    <li>
-        <del>截图</del>
-    </li>
-    <li><del>今天吃什么</del>
-    </li>
-    <li>
-        消息全备份
-    </li>
-    <li>
-        消息搜索，基于好友、内容
-    </li>
-    <li>
-        在备份基础上提供信息分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …
-    </li>
-    <li>
-        定时发送消息
-    </li>
-    <li>
-        <del>自定义规则消息回复</del>
-    </li>
+    <li><del>撤回消息备份</del></li>
+    <li><del>关键词监听</del></li>
+    <li><del>自动签到</del></li>
+    <li><del>截图</del></li>
+    <li><del>今天吃什么</del></li>
+    <li>消息全备份</li>
+    <li>消息搜索，基于好友、内容</li>
+    <li>在备份基础上提供信息分析，以及做成数据可视化，群组聊天记录分析。好友的分析，包括地域、年龄 …</li>
+    <li>定时发送消息</li>
+    <li><del>自定义规则消息回复</del></li>
 </ul>
 
 
@@ -63,13 +44,13 @@ Python版本：python3.5<br><br>
 <strong>删除关键词[关键词]</strong>  e.g. 删除关键词[在不在]<br>
 <strong>清空关键词</strong>  清空已经设置的所有关键词<br>
 <strong>查看关键词</strong>  查看目前设置的关键词<br>
-<strong>添加签到口令#公众号:签到口令#</strong>   e.g. 添加签到口令#招商银行信用卡:签到#<br>
-<strong>删除签到口令#公众号#</strong>   e.g. 删除签到口令#招商银行信用卡#<br>
+<strong>添加签到口令[公众号:签到口令]</strong>   e.g. 添加签到口令[招商银行信用卡:签到]<br>
+<strong>删除签到口令[公众号]</strong>   e.g. 删除签到口令[招商银行信用卡]<br>
 <strong>查看签到口令</strong>  查看已经存在的公众和和对应的签到口令<br>
 <strong>清空签到口令</strong>  清空所有签到口令<br>
 <strong>截图</strong> 截取当前屏幕发送到文件助手<br>
-<strong>添加自动回复#针对的关键词:回复内容#</strong> e.g.添加自动回复#在不在:我现在有事情，待会儿回复你#<br>
-<strong>删除自动回复#针对的关键词#</strong> e.g.删除自动回复#在不在#<br>
+<strong>添加自动回复[针对的关键词:回复内容]</strong> e.g.添加自动回复[在不在:我现在有事情，待会儿回复你]<br>
+<strong>删除自动回复[针对的关键词]</strong> e.g.删除自动回复#在不在#<br>
 <strong>清空自动回复</strong> 清空所有的自定义回复规则<br>
 <strong>关闭自动回复</strong> <br>
 <strong>打开自动回复</strong> <br>
