@@ -11,13 +11,13 @@ Python版本：python3.5<br><br>
 可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br>
 下载最新版替换原先的程序时，只需要替换exe文件，其他的不需要移动或者修改。<br><br>
 <hr />
-#######<strong>NEW</strong>#######################################################################################<br>
-#                                                                                               #<br>
-#  如果想要传送中文文件名的文件，把fields.py复制到requests包，                                  #<br>
-#  requests/packages/urllib3/ 路径下，替换原来的fields.py文件。                                 #<br>
+#######<strong>NEW</strong>#############################################################################<br>
+#                                                                                     #<br>
+#  如果想要传送中文文件名的文件，把fields.py复制到requests包，                        #<br>
+#  requests/packages/urllib3/ 路径下，替换原来的fields.py文件。                       #<br>
 #  <a href="https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py2">fields.py(py2)</a> / <a href="https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py3">fileds.py(py3)</a>      #<br>
-#                                                                                               #<br>
-#################################################################################################<br>
+#                                                                                     #<br>
+######################################################################################<br>
 <hr />
 <h3>注意</h3>
 <strong>默认</strong>使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
