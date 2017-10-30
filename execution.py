@@ -180,7 +180,7 @@ class Execution:
 
         if re.search(r"png|jpg|bmp|jpeg|gif|webp", filename):
             msg_type = "img"
-        elif re.search(r"avi|rm|map4|wmv", filename):
+        elif re.search(r"avi|rm|mp4|wmv", filename):
             msg_type = "vid"
         else:
             msg_type = "fil"

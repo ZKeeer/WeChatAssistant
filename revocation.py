@@ -30,7 +30,10 @@ class Revocation:
                     item = self.msg_store.pop(msgid)
                     # 可下载类消息，并删除相关文件
                     if item['msg_type'] in ['Picture', 'Recording', 'Video', 'Attachment']:
-                        os.remove("./Cache/" + item['msg_content'])
+                        try:
+                            os.remove("./Cache/" + item['msg_content'])
+                        except BaseException as e:
+                            pass
 
     def GetOldMsg(self, msg):
         """
@@ -164,4 +167,4 @@ class Revocation:
             msg_send = self.GetMsgToSend(old_msg, msg_time_touser)
             # 将撤回消息的通知以及细节发送到文件助手
             itchat.send(msg_send, toUserName='filehelper')
-            #self.msg_store.pop(msg_id)
+            # self.msg_store.pop(msg_id)

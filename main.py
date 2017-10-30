@@ -82,7 +82,7 @@ def Pretreat(func):
                 if msglist[0].get('MsgId', '') == msgid:
                     continue
             except BaseException as e:
-                continue
+                traceback.print_exc(file=open('log.txt', 'a'))
 
             # 消息队列不为空并且头元素是未访问过的消息，进行处理。
             try:
