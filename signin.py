@@ -56,7 +56,7 @@ class SignInMPS:
         """
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
-                fw.write(time.strftime("%d", time.localtime()))
+                fw.write(str(time.localtime().tm_mday))
             last_date = str((time.localtime().tm_mday - 1))
         else:
             with open(self.Date_path, 'r') as fr:
@@ -82,14 +82,14 @@ class SignInMPS:
                         if item_key_mps:
                             itchat.send(sign_list.get(item_key, '签到'), toUserName=item_key_mps['UserName'])
         with open(self.Date_path, "w") as fw:
-            fw.write(time.strftime("%d", time.localtime()))
+            fw.write(str(time.localtime().tm_mday))
 
     def ShowComd(self):
         t_dict = self.GetCommand()
         result = ""
         try:
-            for k,v in zip(t_dict.keys(), t_dict.values()):
-                result += "{}:{}、\n".format(k,v)
+            for k, v in zip(t_dict.keys(), t_dict.values()):
+                result += "{}:{}、{}".format(k, v, '\n')
         except BaseException as e:
             pass
         if result:
