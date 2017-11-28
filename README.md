@@ -18,10 +18,9 @@ Python版本：python3.5
 --------
 #######**NEW**##################################################################
 
-如果想要传送中文文件名的文件，把fields.py复制到requests包，  
-requests/packages/urllib3/路径下，替换原来的fields.py文件。  
+如果想要***传输中文文件名的文件***，把fields.py复制到requests包，requests/packages/urllib3/路径下，  
+替换原来的fields.py文件。  
 [fields.py(py2)](https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py2)  /  [fileds.py(py3)](https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py3)  
-
 
 #############################################################################
 
