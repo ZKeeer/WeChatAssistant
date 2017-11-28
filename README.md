@@ -5,12 +5,20 @@
 贡献者：<a href='https://github.com/XAS-712'>XAS-712</a>、 <a href='https://github.com/SLiNv'>SLiNv</a>、 <a href="https://github.com/linwencai">linwencai</a>
 
 
-欢迎好的idea和pull request<br><br>
-<hr />
-<h3>环境相关</h3>
-Python版本：python3.5<br><br>
-### Linux环境配置<br>
-<code>pip install -r requirements.txt</code><br><br>
+欢迎好的idea和pull request
+
+
+---
+### 环境相关
+Python版本：python3.5
+
+
+### Linux环境配置
+
+
+<code>pip install -r requirements.txt</code>
+
+
 ### Windows用户<br>
 可以直接下载已打包的程序，<a href='https://github.com/ZKeeer/WeChatForRevocation/releases'>点击这里</a>。<br>
 下载最新版替换原先的程序时，只需要替换exe文件，其他的不需要移动或者修改。<br><br>
