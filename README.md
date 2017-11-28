@@ -16,7 +16,7 @@ Python版本：python3.5
 ### Linux环境配置
 
 
-<code>pip install -r requirements.txt</code>
+`pip install -r requirements.txt`
 
 
 ### Windows用户
@@ -29,24 +29,24 @@ Python版本：python3.5
 
 
 ---
-#######<strong>NEW</strong>##################################################################<br>
+#######**NEW**##################################################################<br>
 #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
 #&nbsp;&nbsp;如果想要传送中文文件名的文件，把fields.py复制到requests包，&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
 #&nbsp;&nbsp;requests/packages/urllib3/ 路径下，替换原来的fields.py文件。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
 #&nbsp;&nbsp;<a href="https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py2">fields.py(py2)</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="https://github.com/ZKeeer/WeChatAssistant/tree/master/fields/fields-py3">fileds.py(py3)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
 #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<br>
 #############################################################################<br>
-<hr />
+---
 <h3>注意</h3>
-<strong>默认</strong>使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
+**默认**使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
 在Linux下如果在纯命令行模式下，则输出到命令行<br><br>
 截图功能依赖: <br>
      python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）<br>
      linux: scrot<br><br>
 默认：自动回复处于打开状态
-<hr />
+---
 
-<strong><a href='http://zkeeer.space/?page_id=2'>TODO LIST</a></strong><br>
+**<a href='http://zkeeer.space/?page_id=2'>TODO LIST</a>**<br>
 <ul type="circle">
     <li><del>撤回消息备份</del></li>
     <li><del>关键词监听</del></li>
@@ -60,25 +60,24 @@ Python版本：python3.5
     <li><del>自定义规则消息回复</del></li>
 </ul>
 
-
-<hr />
+---
 <h4>支持以下指令（在文件助手发送任意词，即可获得命令）：</h4>
-<strong>查看/删除文件[文件名]</strong> e.g. 查看文件[123345234.mp3]<br>
-<strong>撤回附件列表</strong> (查看都有哪些保存在电脑中的已撤回附件)<br>
-<strong>清空附件列表</strong> (清空已经保存在电脑中的附件)<br>
-<strong>添加关键词[关键词]</strong>  e.g. 设置关键词[在不在]<br>
-<strong>删除关键词[关键词]</strong>  e.g. 删除关键词[在不在]<br>
-<strong>清空关键词</strong>  清空已经设置的所有关键词<br>
-<strong>查看关键词</strong>  查看目前设置的关键词<br>
-<strong>添加签到口令[公众号:签到口令]</strong>   e.g. 添加签到口令[招商银行信用卡:签到]<br>
-<strong>删除签到口令[公众号]</strong>   e.g. 删除签到口令[招商银行信用卡]<br>
-<strong>查看签到口令</strong>  查看已经存在的公众和和对应的签到口令<br>
-<strong>清空签到口令</strong>  清空所有签到口令<br>
-<strong>截图</strong> 截取当前屏幕发送到文件助手<br>
-<strong>添加自动回复[针对的关键词:回复内容]</strong> e.g.添加自动回复[在不在:我现在有事情，待会儿回复你]<br>
-<strong>删除自动回复[针对的关键词]</strong> e.g.删除自动回复#在不在#<br>
-<strong>清空自动回复</strong> 清空所有的自定义回复规则<br>
-<strong>关闭自动回复</strong> <br>
-<strong>打开自动回复</strong> <br>
-<strong>今天吃什么</strong> 纯粹是闹着玩的功能 <br>
-<strong>退出程序</strong> <br>
+**查看/删除文件[文件名]** e.g. 查看文件[123345234.mp3]<br>
+**撤回附件列表** (查看都有哪些保存在电脑中的已撤回附件)<br>
+**清空附件列表** (清空已经保存在电脑中的附件)<br>
+**添加关键词[关键词]**  e.g. 设置关键词[在不在]<br>
+**删除关键词[关键词]**  e.g. 删除关键词[在不在]<br>
+**清空关键词**  清空已经设置的所有关键词<br>
+**查看关键词**  查看目前设置的关键词<br>
+**添加签到口令[公众号:签到口令]**   e.g. 添加签到口令[招商银行信用卡:签到]<br>
+**删除签到口令[公众号]**   e.g. 删除签到口令[招商银行信用卡]<br>
+**查看签到口令**  查看已经存在的公众和和对应的签到口令<br>
+**清空签到口令**  清空所有签到口令<br>
+**截图** 截取当前屏幕发送到文件助手<br>
+**添加自动回复[针对的关键词:回复内容]** e.g.添加自动回复[在不在:我现在有事情，待会儿回复你]<br>
+**删除自动回复[针对的关键词]** e.g.删除自动回复#在不在#<br>
+**清空自动回复** 清空所有的自定义回复规则<br>
+**关闭自动回复** <br>
+**打开自动回复** <br>
+**今天吃什么** 纯粹是闹着玩的功能 <br>
+**退出程序** <br>
