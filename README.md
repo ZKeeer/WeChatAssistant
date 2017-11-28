@@ -6,15 +6,14 @@
 -----
 ### 环境相关
 Python版本：python3.5  
+
 ### Linux环境配置  
 `pip install -r requirements.txt`  
 
-### Windows用户
+### Windows用户  
 
-
-可以直接下载已打包的程序，可以直接下载已打包的程序，[点击这里](https://github.com/ZKeeer/WeChatForRevocation/releases)。
-
-下载最新版替换原先的程序时，只需要替换exe文件，其他的不需要移动或者修改。
+可以直接下载已打包的程序，可以直接下载已打包的程序，[点击这里](https://github.com/ZKeeer/WeChatForRevocation/releases)。  
+下载最新版替换原先的程序时，只需要替换exe文件，其他的不需要移动或者修改。  
 
 --------
 #######**NEW**##################################################################
@@ -30,14 +29,14 @@ Python版本：python3.5
 
 ------
 ### 注意
-**默认**使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。<br>
-在Linux下如果在纯命令行模式下，则输出到命令行<br><br>
-截图功能依赖: <br>
-     python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）<br>
-     linux: scrot<br><br>
+**默认**使用系统的图片查看程序打开二维码。如果没有默认的图片打开程序，请指定画图为默认打开程序。否则无法登陆。  
+在Linux下如果在纯命令行模式下，则输出到命令行
+
+截图功能依赖:   
+    python: pyscreenshot(only linux), PIL（python2.x）/Pillow（python3.x）  
+    linux: scrot
+    
 默认：自动回复处于打开状态
-
-
 
 ------
 
@@ -59,7 +58,7 @@ Python版本：python3.5
 ####支持以下指令（在文件助手发送任意词，即可获得命令）：
 
 
-__查看/删除文件[文件名]__ e.g. 查看文件[123345234.mp3]<br>
+**查看/删除文件[文件名]** e.g. 查看文件[123345234.mp3]<br>
 **撤回附件列表** (查看都有哪些保存在电脑中的已撤回附件)<br>
 **清空附件列表** (清空已经保存在电脑中的附件)<br>
 **添加关键词[关键词]**  e.g. 设置关键词[在不在]<br>
