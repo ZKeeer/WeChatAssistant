@@ -1,19 +1,30 @@
 # -*-encoding:utf-8-*-
 import os
-import re
+import sqlite3
 import time
 
 import itchat
 
+import config
+
 
 class SignInMPS:
-    Command_Path = "Command.txt"
-    Date_path = "Date.txt"
-
     def __init__(self):
-        if not os.path.exists(self.Command_Path):
-            with open(self.Command_Path, "w") as fw:
-                fw.write('')
+        self.db = config.database
+        self.table = config.signin_table
+        self.signin_list = {}
+        self.Date_path = "./signflag.txt"
+        db_connect = sqlite3.connect(self.db)
+
+        try:
+            db_connect.execute(
+                """CREATE TABLE IF NOT EXISTS {} (MPS TEXT NOT NULL, CONTENT NOT NULL);""".format(self.table))
+            db_connect.commit()
+        except BaseException as e:
+            db_connect.rollback()
+        finally:
+            db_connect.close()
+
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
                 fw.write(str(time.localtime().tm_mday - 1))
@@ -25,19 +36,16 @@ class SignInMPS:
         例如：#招商银行信用卡:签到#
         :return: 返回一个dict类型
         """
-        if not os.path.exists(self.Command_Path):
-            with open(self.Command_Path, "w") as fw:
-                fw.write('')
-            return {}
-
         command_dict = {}
-        with open(self.Command_Path, 'r') as fr:
-            file_content = fr.read()
-            # result类型为：[(), (), ...]
-            result = re.findall("#(.*?):(.*?)#", file_content)
-            if result:
-                for item in result:
-                    command_dict.update({item[0]: item[1]})
+        db_connect = sqlite3.connect(self.db)
+        db_cursor = db_connect.cursor()
+        for item in db_cursor.execute("""SELECT * FROM {};""".format(self.table)).fetchall():
+            try:
+                command_dict.update({item[0]: item[1]})
+            except BaseException as e:
+                continue
+        db_cursor.close()
+        db_connect.close()
 
         return command_dict
 
@@ -48,7 +56,7 @@ class SignInMPS:
         """
         if not os.path.exists(self.Date_path):
             with open(self.Date_path, "w") as fw:
-                fw.write(time.strftime("%d", time.localtime()))
+                fw.write(str(time.localtime().tm_mday))
             last_date = str((time.localtime().tm_mday - 1))
         else:
             with open(self.Date_path, 'r') as fr:
@@ -74,36 +82,58 @@ class SignInMPS:
                         if item_key_mps:
                             itchat.send(sign_list.get(item_key, '签到'), toUserName=item_key_mps['UserName'])
         with open(self.Date_path, "w") as fw:
-            fw.write(time.strftime("%d", time.localtime()))
+            fw.write(str(time.localtime().tm_mday))
 
     def ShowComd(self):
-        with open(self.Command_Path, 'r') as fr:
-            comd_list = fr.read()
-            comd_list_tmp = re.findall("#(.*?)#", comd_list)
-            comd_list_retn = ''
-            for item in comd_list_tmp:
-                comd_list_retn += (item + '\n')
-        return comd_list_retn
+        t_dict = self.GetCommand()
+        result = ""
+        try:
+            for k, v in zip(t_dict.keys(), t_dict.values()):
+                result += "{}:{}、{}".format(k, v, '\n')
+        except BaseException as e:
+            pass
+        if result:
+            return result
+        else:
+            return "暂无签到口令"
 
     def ClearComd(self):
-        with open(self.Command_Path, "w") as fw:
-            fw.write('')
-        return True
+        db_connect = sqlite3.connect(self.db)
+        try:
+            db_connect.execute("""DELETE FROM {};""".format(self.table))
+            db_connect.commit()
+            return "清空签到口令成功"
+        except BaseException as e:
+            db_connect.rollback()
+            return "清空签到口令失败"
+        finally:
+            db_connect.close()
 
     def AddComd(self, mps, comd):
-        with open(self.Command_Path, 'a') as fa:
-            fa.write('#{}:{}#'.format(mps, comd))
-        return True
+        db_connect = sqlite3.connect(self.db)
+        try:
+            db_connect.execute("""INSERT INTO {} VALUES ('{}', '{}')""".format(self.table, mps, comd))
+            db_connect.commit()
+            return "添加签到口令【{}:{}】成功".format(mps,comd)
+        except BaseException as e:
+            db_connect.rollback()
+            return "添加签到口令【{}:{}】失败".format(mps,comd)
+        finally:
+            db_connect.close()
 
     def DeleteComd(self, mps):
-        file_content = ''
-
-        with open(self.Command_Path, 'r') as fr:
-            file_content = fr.read()
-        if re.findall(mps, file_content):
-            comd = re.search("#{}:(.*?)#".format(mps), file_content).group(1)
-            file_content = file_content.replace('#{}:{}#'.format(mps, comd), '')
-            with open(self.Command_Path, "w") as fw:
-                fw.write(file_content)
-            return True
-        return False
+        db_connect = sqlite3.connect(self.db)
+        db_cursor = db_connect.cursor()
+        try:
+            if db_cursor.execute("""SELECT * FROM {} WHERE MPS = '{}';""".format(self.table, mps)).fetchall():
+                db_connect.execute("""DELETE FROM {} WHERE MPS = '{}';""".format(self.table, mps))
+                db_connect.commit()
+                return "删除口令【{}】成功".format(mps)
+            else:
+                return "口令【{}】不存在，请重试".format(mps)
+        except BaseException as e:
+            db_connect.rollback()
+            return "删除口令【{}】失败".format(mps)
+        finally:
+            db_cursor.close()
+            db_connect.close()
