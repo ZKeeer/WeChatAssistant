@@ -1,14 +1,16 @@
+# !/usr/bin/env python
+# -*- encoding:utf-8 -*-
 import os
 import random
 import re
 
 import itchat
 
-import config
-import screenshoot
-from autoreply import MsgAutoReply
-from keywordlistener import KeywordListener as Keyword
-from signin import SignInMPS
+from . import config
+from . import screenshoot
+from .autoreply import MsgAutoReply
+from .keywordlistener import KeywordListener as Keyword
+from .signin import SignInMPS
 # from takephoto import TakeGIF
 
 

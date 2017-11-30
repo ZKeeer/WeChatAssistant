@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <title>revocation</title>
+</head>
+<body>
+hello
+    <form action="get_image" id="thisform" method="post">
+        {% csrf_token %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "star" %} 进行登录！
+        </button>
+        {% endbuttons %}
+    </form>
+    <!--{% if True %}-->
+    <!--<img src="{% static 'QR.png' %}">-->
+    <!--{% endif %}-->
+</body>
+</html>
