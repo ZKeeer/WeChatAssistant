@@ -160,7 +160,7 @@ def run(dir='.'):
         else:
             itchat.auto_login(hotReload=True, enableCmdQR=2, picDir=dir)
     else:
-        itchat.auto_login(hotReload=True,picDir=dir)
+        itchat.auto_login(hotReload=True, picDir=dir)
     # itchat.auto_login(hotReload=True)
     run_thread = Thread(target=itchat.run)
     clearmsglist_thread = Thread(target=clearmsglist_func)
