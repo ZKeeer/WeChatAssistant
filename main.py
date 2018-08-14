@@ -47,6 +47,7 @@ msglist = list()
 def msg_acceptor(msg):
     msg['Visitor'] = 0
     msglist.append(msg)
+    print(msg,'\n\n\n\n')
 
 
 def clearmsglist_func():
@@ -65,7 +66,7 @@ def clearmsglist_func():
                 else:
                     record.update({'MsgId': msglist[0].get('MsgId', ''), "time": time.time()})
         else:
-            time.sleep(0.1)
+            time.sleep(1)
 
 
 def Pretreat(func):
@@ -151,7 +152,7 @@ def keeponline_func():
     while True:
         # 功能：保持在线
         keeponline.ActiveWX()
-        time.sleep(3600)
+        time.sleep(1800)
 
 
 if __name__ == '__main__':
