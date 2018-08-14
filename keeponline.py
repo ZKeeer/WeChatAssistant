@@ -15,7 +15,5 @@ class KeepOnline:
             return False
 
     def ActiveWX(self):
-        if self.IsActived():
-            pass
-        else:
-            itchat.login()
+        itchat.login()
+        itchat.send("keep online msg", toUserName='filehelper')

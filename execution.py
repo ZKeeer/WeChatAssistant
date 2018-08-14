@@ -147,7 +147,7 @@ class Execution:
             msg_send += "今天就吃 {} 吧{}{}".format(today_choice, '\n', emotion)
             itchat.send(msg_send, toUserName='filehelper')
         elif re.match("^退出程序$", command):
-            itchat.send("退出程序成功", toUserName='filehelper')
+            itchat.send("======助手消息======\n退出程序成功", toUserName='filehelper')
             itchat.logout()
             os._exit(0)
         else:

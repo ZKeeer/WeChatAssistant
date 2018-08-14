@@ -47,7 +47,7 @@ msglist = list()
 def msg_acceptor(msg):
     msg['Visitor'] = 0
     msglist.append(msg)
-    print(msg,'\n\n\n\n')
+    print(msg, '\n\n\n\n')
 
 
 def clearmsglist_func():
